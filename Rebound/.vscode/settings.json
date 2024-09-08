@@ -55,5 +55,5 @@
     "omnisharp.useModernNet": false,
     "dotnet.preferCSharpExtension": true,
     "editor.codeLens": false,
-    "dotnet.defaultSolution": "My project.sln"
+    "dotnet.defaultSolution": "Rebound.sln"
 }
