@@ -6,12 +6,20 @@ using TMPro;
 using UnityEngine.UI;
 
 
+
 public class GameController : MonoBehaviour
 {
     public static GameController Instance;
     public BoardManager boardManager;
     public Game game;
     public Game.GameType GameMode;
+
+    public GameObject SoccerBackground;
+    public GameObject SumoBackground;
+    public GameObject GolfBackground;
+    public GameObject PoolBackground;
+    public GameObject SoccerBlitzBackground;
+
     private void Awake()
     {
         Instance = this;
@@ -27,6 +35,7 @@ public class GameController : MonoBehaviour
         }
         SceneManager.LoadScene("GameScene");
         game = new Game(GameMode);
+
     }
 
 }
@@ -82,6 +91,7 @@ public class Game
         Dot StartOfGameDot { get; set; }
         int BoardHeight { get; set; }
         int BoardWidth { get; set; }
+        GameObject Background { get; set; }
         void CustomBoardSetup(int BoxesX, int BoxesY);
         void CustomRules();
         void CheckForWin();
@@ -93,7 +103,9 @@ public class Game
         {
             BoardHeight = 13;
             BoardWidth = 7;
+            Background = Resources.Load<GameObject>("Prefabs/SoccerBackground");
         }
+        public GameObject Background { get; set; }
         public List<Dot> P1GoalDots = new List<Dot>();
         public List<Dot> P2GoalDots = new List<Dot>();
         public Dot StartOfGameDot { get; set; }
@@ -206,7 +218,9 @@ public class Game
         {
             BoardHeight = 15;
             BoardWidth = 7;
+            Background = Resources.Load<GameObject>("Prefabs/SumoBackground");
         }
+        public GameObject Background { get; set; }
         public Dot StartOfGameDot { get; set; }
         public int BoardHeight { get; set; }
         public int BoardWidth { get; set; }
@@ -233,7 +247,9 @@ public class Game
         {
             BoardHeight = 15;
             BoardWidth = 7;
+            Background = Resources.Load<GameObject>("Prefabs/GolfBackground");
         }
+        public GameObject Background { get; set; }
         public Dot StartOfGameDot { get; set; }
         public int BoardHeight { get; set; }
         public int BoardWidth { get; set; }
@@ -260,7 +276,9 @@ public class Game
         {
             BoardHeight = 15;
             BoardWidth = 7;
+            Background = Resources.Load<GameObject>("Prefabs/PoolBackground");
         }
+        public GameObject Background { get; set; }
         public Dot StartOfGameDot { get; set; }
         public int BoardHeight { get; set; }
         public int BoardWidth { get; set; }
@@ -285,9 +303,11 @@ public class Game
     {
         public SoccerBlitz()
         {
+            Background = Resources.Load<GameObject>("Prefabs/SoccerBlitzBackground");
             BoardHeight = 15;
             BoardWidth = 7;
         }
+        public GameObject Background { get; set; }
         public Dot StartOfGameDot { get; set; }
         public int BoardHeight { get; set; }
         public int BoardWidth { get; set; }

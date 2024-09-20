@@ -39,6 +39,7 @@ public class BoardManager : Singleton<BoardManager>
     {
 
         Game.IGameType CurrentGame = GameObject.Find("GameController").GetComponent<GameController>().game.CurrentGame;
+        Instantiate(CurrentGame.Background, new Vector3(0, 0, 0), Quaternion.identity);
         coulumns = CurrentGame.BoardWidth;
         rows = CurrentGame.BoardHeight;
         //Create Centered Array of Dots
@@ -65,6 +66,7 @@ public class BoardManager : Singleton<BoardManager>
                 GameObject instance = Instantiate(dotPrefab, new Vector3(worldPos.x, worldPos.y, 0), Quaternion.identity);
                 Dot.Board[x, y] = new Dot(worldPos.x, worldPos.y, x, y, instance);
                 Dot.Board[x, y].Instance.name = "Dot (" + x + ", " + y + ")";
+                Dot.Board[x, y].Instance.transform.SetParent(GameObject.Find("Dots").transform);
                 Dot.Board[x, y].Instance.GetComponent<CircleCollider2D>().radius = spacing / 3f / Dot.Board[x, y].Instance.transform.localScale.x;
             }
         }
@@ -94,24 +96,15 @@ public class BoardManager : Singleton<BoardManager>
             // Made list of adjacent dots to CurrentDot
             List<Dot> neighbours = CurrentDot.GetNeighbours();
             List<Dot> adjacentList = new();
-            //var dotsWithDiagonals = new List<Dot>();
             foreach (Dot dot in neighbours)
             {
                 if (dot.X == CurrentDot.X || dot.Y == CurrentDot.Y)
                 {
                     adjacentList.Add(dot);
                 }
-                //if ((Mathf.Abs(dot.BoardX - CurrentDot.BoardX) == 1) && ( Mathf.Abs(dot.BoardY - CurrentDot.BoardY) == 1)){
-                //    dotsWithDiagonals.Add(dot);
-                //}
             }
             adjacentList = adjacentList.Distinct().ToList();
-            //dotsWithDiagonals = dotsWithDiagonals.Intersect(outerDots).Distinct().ToList();
-            //foreach (var x in dotsWithDiagonals)
-            //{
-            //    Debug.Log(x.BoardX.ToString() + ", " + x.BoardY.ToString());
-            //}
-            // Find the first dot in adjacentList that is in outerDots and not in orderedList
+
             foreach (Dot dot in adjacentList)
             {
                 if (outerDots.Contains(dot) && !orderedList.Contains(dot))
@@ -143,7 +136,6 @@ public class BoardManager : Singleton<BoardManager>
 
             Vector2 direction = new Vector2(currentDot.BoardX - prevDot.BoardX, currentDot.BoardY - prevDot.BoardY);
             Vector2 direction2 = new Vector2(nextDot.BoardX - currentDot.BoardX, nextDot.BoardY - currentDot.BoardY);
-            //1,0 ==> 0,1 | 0,-1 ==> 1, 0 | -1,0 ==> 0, -1 | 0, 1 ==> -1, 0
             bool inturn = direction2.x == -direction.y && direction2.y == direction.x;
             if (inturn)
             {
