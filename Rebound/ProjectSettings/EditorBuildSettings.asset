@@ -11,11 +11,11 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/SetupScene.unity
     guid: 3fc8acdd13e6c734bafef6554d6fdbcd
   - enabled: 1
-    path: Assets/Scenes/SoccerScene.unity
+    path: Assets/Scenes/GameScene.unity
     guid: 6a20bb685eeae459d87b6374820fbef9
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: fbef879a86b144fd3887d2a2e63cea97, type: 2}

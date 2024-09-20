@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8499490346376418030}
   - component: {fileID: 6376460842601418240}
-  - component: {fileID: 3290943049392013156}
   m_Layer: 0
   m_Name: Line
   m_TagString: Untagged
@@ -26,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1588543321073033245}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.84184873, y: 1.2177926, z: 0.3418468}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -73,7 +72,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 25
+  m_SortingOrder: 9
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
@@ -130,16 +129,3 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &3290943049392013156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1588543321073033245}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee34fcf10d18e4669b5c71c88e73005b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentLineValid: 0

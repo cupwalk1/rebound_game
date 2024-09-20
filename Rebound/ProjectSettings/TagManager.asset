@@ -8,6 +8,8 @@ TagManager:
   - PlayerIndicator
   - WinnerText
   - WinnerCoriandoli
+  - GC
+  - GrassBG
   layers:
   - Default
   - TransparentFX
