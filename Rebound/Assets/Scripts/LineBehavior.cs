@@ -1,23 +1,14 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
-using UnityEditor;
-
-
-
-
 
 
 public class LineBehavior : MonoBehaviour
 {
-    private GameController gc;
-    private BoardManager boardManager;
-    private Dot LastDot;
+
     public List<Dot> validDots = new();
     public bool gameInProgress = true;
-    private Dot[,] board; // The game board
     public Camera mainCamera; // Assign this in the inspector
     public Dot startDot;
     public Dot currentDot;
@@ -40,22 +31,22 @@ public class LineBehavior : MonoBehaviour
         Screen.orientation = ScreenOrientation.Portrait;
         BoardManager.Instance.GenerateBoard();
         game = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().game.CurrentGame;
-        Button.GetComponent<Button>().onClick.AddListener(Undo);
+        Button.GetComponent<Button>().onClick.AddListener(CheckUndo);
     }
 
     void Start()
     {
-        boardManager = UnityEngine.GameObject.Find("BoardManager").GetComponent<BoardManager>();
         SetCurrentDot(GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().game.CurrentGame.StartOfGameDot);
         CurrentPlayer = Player.P2;
         ChangePlayer();
-
     }
 
     void Update()
     {
         if (!gameInProgress)
         {
+            //Deactivate button
+            GameObject.FindGameObjectWithTag("Button").GetComponent<Button>().interactable = false;
             return;
         }
         if (Input.touchCount == 0)
@@ -69,23 +60,27 @@ public class LineBehavior : MonoBehaviour
         switch (touch.phase)
         {
             case TouchPhase.Began:
-                OnTouchBegan(touch, hit);
+                OnTouchBegan(hit);
                 break;
             case TouchPhase.Moved:
                 OnTouchMoved(touch, hit);
                 break;
             case TouchPhase.Ended:
-                OnTouchEnded(touch, hit);
+                OnTouchEnded();
                 break;
             case TouchPhase.Canceled:
-                OnTouchEnded(touch, hit);
+                OnTouchEnded();
                 break;
         }
     }
 
-    private void Undo()
+    private void CheckUndo()
     {
-        bool canUndo;
+        if (Line.LineHistory.Count == 0)
+        {
+            return;
+        }
+
         Line lastLine = Line.LineHistory.Last();
 
         if (lastLine.GetEndDot() == null)
@@ -94,49 +89,62 @@ public class LineBehavior : MonoBehaviour
             return;
         }
 
-        if (Line.LineHistory.Count == 1)
+        if (Line.LineHistory.Count == 1 && hasMoved)
         {
-            canUndo = true;
-        }
-        
-        else if (Line.LineHistory.Count == 0)
-        {
-            canUndo = false;
+            Undo();
+            ChangePlayer();
+            return;
         }
 
-        else if (Line.LineHistory[^2].RendererInstance.startColor == lastLine.RendererInstance.startColor && hasMoved)
+        if (lastLine.GetEndDot().AttachedLines.Count > 1)
         {
-            if (lastLine.GetEndDot().AttachedLines.Count() == 1)
+            if (lastLine.RendererInstance.startColor != Line.LineHistory[^2].RendererInstance.startColor)
             {
-                ChangePlayer();
+                hasMoved = false;
             }
-            canUndo = true;
+            Undo();
+            return;
         }
 
-        else if (hasMoved)
+
+        if (hasMoved && lastLine.RendererInstance.startColor != Line.LineHistory[^2].RendererInstance.startColor)
         {
-            canUndo = true;
+            Undo();
+            ChangePlayer();
             hasMoved = false;
+            return;
         }
-        
-        else if (currentDot.AttachedLines.Count > 1)
+
+        if (hasMoved && lastLine.RendererInstance.startColor == Line.LineHistory[^2].RendererInstance.startColor)
         {
-            canUndo = true;
-        }
-        else canUndo = false;
-        if (canUndo)
-        {
-            DestroyLine(lastLine);
-            if (Line.LineHistory.Count == 0)
-            {
-                SetCurrentDot(game.StartOfGameDot);
-                return;
-            }
-            SetCurrentDot(Line.LineHistory.Last().GetEndDot());
+            Undo();
+            ChangePlayer();
+            hasMoved = false;
+            return;
         }
     }
 
-    private void OnTouchBegan(Touch touch, RaycastHit2D hit)
+    private void Undo()
+    {
+        DestroyLine(Line.LineHistory.Last());
+        if (Line.LineHistory.Count == 0)
+        {
+            SetCurrentDot(game.StartOfGameDot);
+            return;
+        }
+        if (BoardManager.Instance.GetOuterDots().Contains(Line.LineHistory.Last().GetStartDot()))
+        {
+            Line.LineHistory.Last().GetStartDot().SetColor(Color.white);
+        }
+        if (BoardManager.Instance.GetOuterDots().Contains(Line.LineHistory.Last().GetEndDot()))
+        {
+            Line.LineHistory.Last().GetEndDot().SetColor(Color.white);
+        }
+
+        SetCurrentDot(Line.LineHistory.Last().GetEndDot());
+    }
+
+    private void OnTouchBegan(RaycastHit2D hit)
     {
         if (hit.collider == null)
         {
@@ -174,6 +182,19 @@ public class LineBehavior : MonoBehaviour
             hasMoved = true;
             currentLine.SetEndDot(touchedDot);
             game.CheckForWin();
+            if (currentDot.LoseDots.Contains(touchedDot))
+            {
+                GameController gc = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>();
+                switch (CurrentPlayer)
+                {
+                    case Player.P1:
+                        gc.game.OnVictory(Player.P2);
+                        break;
+                    case Player.P2:
+                        gc.game.OnVictory(Player.P1);
+                        break;
+                }
+            }
             SetCurrentDot(touchedDot);
             if (BoardManager.Instance.GetOuterDots().Contains(currentDot))
             {
@@ -190,8 +211,9 @@ public class LineBehavior : MonoBehaviour
 
     }
 
-    private void OnTouchEnded(Touch touch, RaycastHit2D hit)
+    private void OnTouchEnded()
     {
+
         if (currentLine == null)
         {
             return;
@@ -220,6 +242,7 @@ public class LineBehavior : MonoBehaviour
         line.GetStartDot().AttachedLines.Remove(line);
         line.GetEndDot()?.AttachedLines.Remove(line);
         Destroy(line.Instance);
+        currentLine = null;
 
     }
 
@@ -258,7 +281,7 @@ public class Dot
     public int BoardX { get; private set; }
     public int BoardY { get; private set; }
     public Color Color { get; set; }
-
+    public List<Dot> LoseDots = new();
     public Dot(float x, float y, int boardX, int boardY, GameObject instance)
     {
         AttachedLines = new List<Line>();
@@ -291,17 +314,20 @@ public class Dot
     }
     public List<Dot> AvailibleDots()
     {
-        LineBehavior lb = UnityEngine.GameObject.Find("Controller").GetComponent<LineBehavior>();
+        LoseDots = new();
         List<Dot> availibleDots = new();
         List<Dot> adjecentDots = GetNeighbours();
         foreach (Dot d in adjecentDots)
         {
-            bool isConnectedToCurrentDot = false;
-            //lb.currentLine.SetEndDot(d);
             if (d.AttachedLines.Count > d.GetNeighbours().Count - 2)
             {
+                Debug.Log("Lose dot");
+                LoseDots.Add(d);
                 continue;
             }
+            
+            bool isConnectedToCurrentDot = false;
+            //lb.currentLine.SetEndDot(d);
             //if there is no line between dot and current dot
 
             foreach (Line l in d.AttachedLines)
@@ -314,9 +340,14 @@ public class Dot
             if (!isConnectedToCurrentDot)
             {
                 availibleDots.Add(d);
+                continue;
             }
 
             //lb.currentLine.SetEndDot(null);
+        }
+        if (availibleDots.Count == 0)
+        {
+            return LoseDots;
         }
         return availibleDots;
     }

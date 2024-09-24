@@ -9,11 +9,8 @@ public class SnapGrassToField : MonoBehaviour
     void Start()
     {
         BoardManager bm = GameObject.Find("BoardManager").GetComponent<BoardManager>();
-        RawImage ri = GetComponent<RawImage>(); 
-        RectTransform rt = GetComponent<RectTransform>();
-
-        Rect rect = new();
-        rect = ri.uvRect;
+        RawImage ri = GetComponent<RawImage>();
+        Rect rect = ri.uvRect;
         float dotdistanceY = bm.spacing; 
         float H = (.125f*Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 0)).y)/(dotdistanceY);
         rect.height = H;

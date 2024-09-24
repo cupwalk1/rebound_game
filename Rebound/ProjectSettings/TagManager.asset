@@ -10,6 +10,7 @@ TagManager:
   - WinnerCoriandoli
   - GC
   - GrassBG
+  - Button
   layers:
   - Default
   - TransparentFX

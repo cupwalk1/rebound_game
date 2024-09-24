@@ -38,6 +38,7 @@ public class GameController : MonoBehaviour
 
     }
 
+
 }
 
 public class Game
@@ -71,6 +72,29 @@ public class Game
         StartGameDot = CurrentGame.StartOfGameDot;
     }
 
+    public void OnVictory(LineBehavior.Player winner)
+    {
+        LineBehavior lb = GameObject.Find("Controller").GetComponent<LineBehavior>();
+        GameObject[] particles = GameObject.FindGameObjectsWithTag("WinnerCoriandoli");
+        lb.gameInProgress = false;
+        lb.WinnerText.SetActive(true);
+        GameObject.Find("UI/backgroundWin").GetComponent<Image>().enabled = true;
+        lb.WinnerText.GetComponent<TMP_Text>().text = winner + " Wins!";
+        if (winner == LineBehavior.Player.P1)
+        {
+            GameObject.Find("Controller").GetComponent<LineBehavior>().WinnerText.GetComponent<TMP_Text>().color = PlayerPrefs.GetColor(LineBehavior.Player.P1);
+        }
+        else
+        {
+            GameObject.Find("Controller").GetComponent<LineBehavior>().WinnerText.GetComponent<TMP_Text>().color = PlayerPrefs.GetColor(LineBehavior.Player.P2);
+        }
+
+        foreach (GameObject particle in particles)
+        {
+            particle.GetComponent<ParticleSystem>().Play();
+        }
+    }
+
     public enum GameType
     {
         Soccer,
@@ -101,13 +125,15 @@ public class Game
     {
         public Soccer()
         {
+            gameController = UnityEngine.GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>();
             BoardHeight = 13;
             BoardWidth = 7;
             Background = Resources.Load<GameObject>("Prefabs/SoccerBackground");
         }
+        public GameController gameController { get; set; }
         public GameObject Background { get; set; }
-        public List<Dot> P1GoalDots = new List<Dot>();
-        public List<Dot> P2GoalDots = new List<Dot>();
+        public List<Dot> P1GoalDots = new();
+        public List<Dot> P2GoalDots = new();
         public Dot StartOfGameDot { get; set; }
         public int BoardHeight { get; set; }
         public int BoardWidth { get; set; }
@@ -130,34 +156,38 @@ public class Game
 
             for (int i = 0; i <= goalBoxes; i++)
             {
-                P1GoalDots.Add(Dot.Board[(boxesX - goalBoxes) / 2 + i, boxesY-1]);
+                P1GoalDots.Add(Dot.Board[(boxesX - goalBoxes) / 2 + i, boxesY - 1]);
                 P2GoalDots.Add(Dot.Board[(boxesX - goalBoxes) / 2 + i, 1]);
             }
             for (int i = 0; i < P1GoalDots.Count; i++)
             {
                 P1GoalDots[i].Instance.GetComponent<SpriteRenderer>().color = PlayerPrefs.GetColor(LineBehavior.Player.P1);
-                if (i == 0){
+                if (i == 0)
+                {
                     P1GoalDots[i].Instance.GetComponent<SpriteRenderer>().color = Color.white;
                 }
-                if (i == P1GoalDots.Count - 1){
+                if (i == P1GoalDots.Count - 1)
+                {
                     P1GoalDots[i].Instance.GetComponent<SpriteRenderer>().color = Color.white;
                     continue;
                 }
-                Line l = new Line(P1GoalDots[i], P1GoalDots[i + 1]);
+                Line l = new(P1GoalDots[i], P1GoalDots[i + 1]);
                 l.SetColor(PlayerPrefs.GetColor(LineBehavior.Player.P1));
 
             }
             for (int i = 0; i < P2GoalDots.Count; i++)
             {
                 P2GoalDots[i].Instance.GetComponent<SpriteRenderer>().color = PlayerPrefs.GetColor(LineBehavior.Player.P2);
-                if (i == 0){
+                if (i == 0)
+                {
                     P2GoalDots[i].Instance.GetComponent<SpriteRenderer>().color = Color.white;
                 }
-                if (i == P2GoalDots.Count - 1){
+                if (i == P2GoalDots.Count - 1)
+                {
                     P2GoalDots[i].Instance.GetComponent<SpriteRenderer>().color = Color.white;
                     continue;
                 }
-                Line l = new Line(P2GoalDots[i], P2GoalDots[i + 1]);
+                Line l = new(P2GoalDots[i], P2GoalDots[i + 1]);
                 l.SetColor(PlayerPrefs.GetColor(LineBehavior.Player.P2));
                 l.Instance.GetComponent<LineRenderer>().sortingOrder = 8;
             }
@@ -184,30 +214,9 @@ public class Game
             }
             else
             {
-                Debug.Log("No Winner Yet");
                 return;
             }
-
-
-            GameObject[] particles = GameObject.FindGameObjectsWithTag("WinnerCoriandoli");
-            lb.gameInProgress = false;
-            lb.WinnerText.SetActive(true);
-            GameObject.Find("UI/backgroundWin").GetComponent<Image>().enabled = true;
-            lb.WinnerText.GetComponent<TMP_Text>().text = winner + " Wins!";
-            if (winner == LineBehavior.Player.P1)
-            {
-                GameObject.Find("Controller").GetComponent<LineBehavior>().WinnerText.GetComponent<TMP_Text>().color = PlayerPrefs.GetColor(LineBehavior.Player.P1);
-            }
-            else
-            {
-                GameObject.Find("Controller").GetComponent<LineBehavior>().WinnerText.GetComponent<TMP_Text>().color = PlayerPrefs.GetColor(LineBehavior.Player.P2);
-            }
-
-            foreach (GameObject particle in particles)
-            {
-                particle.GetComponent<ParticleSystem>().Play();
-            }
-
+            gameController.game.OnVictory(winner);
 
         }
     }
@@ -216,18 +225,20 @@ public class Game
     {
         public Sumo()
         {
-            BoardHeight = 15;
+            BoardHeight = 7;
             BoardWidth = 7;
             Background = Resources.Load<GameObject>("Prefabs/SumoBackground");
+
         }
         public GameObject Background { get; set; }
         public Dot StartOfGameDot { get; set; }
         public int BoardHeight { get; set; }
         public int BoardWidth { get; set; }
 
+
         public void CustomBoardSetup(int boxesX, int boxesY)
         {
-            throw new NotImplementedException();
+            StartOfGameDot = Dot.Board[BoardWidth / 2, BoardHeight / 2];
         }
 
         public void CustomRules()
@@ -237,7 +248,7 @@ public class Game
 
         public void CheckForWin()
         {
-            throw new NotImplementedException();
+            return;
         }
     }
 
@@ -274,18 +285,35 @@ public class Game
     {
         public Pool()
         {
+            gameController = UnityEngine.GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>();
             BoardHeight = 15;
             BoardWidth = 7;
             Background = Resources.Load<GameObject>("Prefabs/PoolBackground");
         }
+        public GameController gameController { get; set; }
         public GameObject Background { get; set; }
         public Dot StartOfGameDot { get; set; }
         public int BoardHeight { get; set; }
         public int BoardWidth { get; set; }
+        public List<Dot> PocketDots = new();
 
         public void CustomBoardSetup(int boxesX, int boxesY)
         {
-            throw new NotImplementedException();
+
+            StartOfGameDot = Dot.Board[boxesX / 2, boxesY / 2];
+
+            //add 6 pockets
+            PocketDots.Add(Dot.Board[0, 0]);
+            PocketDots.Add(Dot.Board[0, boxesY]);
+            PocketDots.Add(Dot.Board[boxesX, 0]);
+            PocketDots.Add(Dot.Board[boxesX, boxesY]);
+            PocketDots.Add(Dot.Board[0, boxesY / 2]);
+            PocketDots.Add(Dot.Board[boxesX, boxesY / 2]);
+
+            foreach (Dot pocket in PocketDots)
+            {
+                pocket.Instance.GetComponent<SpriteRenderer>().color = Color.black;
+            }
         }
 
         public void CustomRules()
@@ -295,7 +323,29 @@ public class Game
 
         public void CheckForWin()
         {
-            throw new NotImplementedException();
+            LineBehavior lb = UnityEngine.GameObject.Find("Controller").GetComponent<LineBehavior>();
+            LineBehavior.Player winner;
+            if (PocketDots.Contains(lb.currentLine.EndDot))
+            {
+                if (lb.currentLine.RendererInstance.startColor == PlayerPrefs.GetColor(LineBehavior.Player.P1))
+                {
+                    winner = LineBehavior.Player.P1;
+                }
+                else if (lb.currentLine.RendererInstance.startColor == PlayerPrefs.GetColor(LineBehavior.Player.P2))
+                {
+                    winner = LineBehavior.Player.P2;
+                }
+                else
+                {
+                    Debug.Log("Error: No Player Color Found");
+                    return;
+                }
+            }
+            else
+            {
+                return;
+            }
+            gameController.game.OnVictory(winner);
         }
     }
 

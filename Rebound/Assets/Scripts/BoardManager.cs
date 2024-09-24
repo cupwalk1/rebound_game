@@ -15,8 +15,6 @@ public class BoardManager : Singleton<BoardManager>
     public float spacing;
     public List<Dot> orderedList;
     private GameObject dotPrefab;
-    private GameObject linePrefab;
-    private LineBehavior lineBehavior;
     public int coulumns;
     public int rows;
     public int boxesX;
@@ -27,11 +25,6 @@ public class BoardManager : Singleton<BoardManager>
     private void Awake()
     {
         dotPrefab = Resources.Load<GameObject>("Prefabs/Dot");
-        linePrefab = Resources.Load<GameObject>("Prefabs/Line");
-
-    }
-    private void Start()
-    {
 
     }
 
@@ -39,7 +32,7 @@ public class BoardManager : Singleton<BoardManager>
     {
 
         Game.IGameType CurrentGame = GameObject.Find("GameController").GetComponent<GameController>().game.CurrentGame;
-        Instantiate(CurrentGame.Background, new Vector3(0, 0, 0), Quaternion.identity);
+        _ = Instantiate(CurrentGame.Background, new Vector3(0, 0, 0), Quaternion.identity);
         coulumns = CurrentGame.BoardWidth;
         rows = CurrentGame.BoardHeight;
         //Create Centered Array of Dots
@@ -62,7 +55,7 @@ public class BoardManager : Singleton<BoardManager>
         {
             for (int y = 0; y < rows; y++)
             {
-                Vector2 worldPos = new Vector2((x * spacing) - offsetX, (y * spacing) - offsetY);
+                Vector2 worldPos = new((x * spacing) - offsetX, (y * spacing) - offsetY);
                 GameObject instance = Instantiate(dotPrefab, new Vector3(worldPos.x, worldPos.y, 0), Quaternion.identity);
                 Dot.Board[x, y] = new Dot(worldPos.x, worldPos.y, x, y, instance);
                 Dot.Board[x, y].Instance.name = "Dot (" + x + ", " + y + ")";
@@ -74,7 +67,7 @@ public class BoardManager : Singleton<BoardManager>
 
         CurrentGame.CustomBoardSetup(boxesX, boxesY);
 
-        List<Dot> outerDots = new List<Dot>();
+        List<Dot> outerDots = new();
         // Find Dots that are not adjacent to 8 dots and put them in list
         for (int x = 0; x < coulumns; x++)
         {
@@ -129,17 +122,17 @@ public class BoardManager : Singleton<BoardManager>
             Dot nextDot;
 
             Dot currentDot = orderedList[i];
-            if (i == 0) prevDot = orderedList[orderedList.Count - 1];
+            if (i == 0) prevDot = orderedList[^1];
             else prevDot = orderedList[i - 1];
             if (i == orderedList.Count - 1) nextDot = orderedList[0];
             else nextDot = orderedList[i + 1];
 
-            Vector2 direction = new Vector2(currentDot.BoardX - prevDot.BoardX, currentDot.BoardY - prevDot.BoardY);
-            Vector2 direction2 = new Vector2(nextDot.BoardX - currentDot.BoardX, nextDot.BoardY - currentDot.BoardY);
+            Vector2 direction = new(currentDot.BoardX - prevDot.BoardX, currentDot.BoardY - prevDot.BoardY);
+            Vector2 direction2 = new(nextDot.BoardX - currentDot.BoardX, nextDot.BoardY - currentDot.BoardY);
             bool inturn = direction2.x == -direction.y && direction2.y == direction.x;
             if (inturn)
             {
-                Line l = new Line(prevDot, nextDot);
+                Line l = new (prevDot, nextDot);
                 l.SetColor(Color.clear);
             }
         }
