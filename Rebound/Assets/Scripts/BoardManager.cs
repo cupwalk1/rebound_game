@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using JetBrains.Annotations;
+using Mono.Cecil.Cil;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +20,7 @@ public class BoardManager : Singleton<BoardManager>
     public int rows;
     public int boxesX;
     public int boxesY;
+    public GameObject DotCover;
 
 
 
@@ -30,9 +32,10 @@ public class BoardManager : Singleton<BoardManager>
 
     public void GenerateBoard()
     {
-
+    
         Game.IGameType CurrentGame = GameObject.Find("GameController").GetComponent<GameController>().game.CurrentGame;
         _ = Instantiate(CurrentGame.Background, new Vector3(0, 0, 0), Quaternion.identity);
+        DotCover = Instantiate(CurrentGame.CurrentDotCover, new Vector3(0, 0, 0), Quaternion.identity);
         coulumns = CurrentGame.BoardWidth;
         rows = CurrentGame.BoardHeight;
         //Create Centered Array of Dots

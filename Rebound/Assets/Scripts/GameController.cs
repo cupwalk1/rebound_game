@@ -119,6 +119,7 @@ public class Game
         void CustomBoardSetup(int BoxesX, int BoxesY);
         void CustomRules();
         void CheckForWin();
+        GameObject CurrentDotCover { get; set; }
     }
 
     public class Soccer : IGameType
@@ -128,6 +129,7 @@ public class Game
             gameController = UnityEngine.GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>();
             BoardHeight = 13;
             BoardWidth = 7;
+            CurrentDotCover = Resources.Load<GameObject>("Prefabs/SoccerBall");
             Background = Resources.Load<GameObject>("Prefabs/SoccerBackground");
         }
         public GameController gameController { get; set; }
@@ -137,6 +139,7 @@ public class Game
         public Dot StartOfGameDot { get; set; }
         public int BoardHeight { get; set; }
         public int BoardWidth { get; set; }
+        public GameObject CurrentDotCover { get; set; }
 
         public void CustomBoardSetup(int boxesX, int boxesY)
         {
@@ -204,11 +207,11 @@ public class Game
         {
             LineBehavior lb = UnityEngine.GameObject.Find("Controller").GetComponent<LineBehavior>();
             LineBehavior.Player winner;
-            if (P1GoalDots.Contains(lb.currentLine.EndDot))
+            if (P1GoalDots.Contains(lb.currentLine.EndDot) && lb.currentLine.RendererInstance.startColor == PlayerPrefs.GetColor(LineBehavior.Player.P1))
             {
                 winner = LineBehavior.Player.P1;
             }
-            else if (P2GoalDots.Contains(lb.currentLine.EndDot))
+            else if (P2GoalDots.Contains(lb.currentLine.EndDot) && lb.currentLine.RendererInstance.startColor == PlayerPrefs.GetColor(LineBehavior.Player.P2))
             {
                 winner = LineBehavior.Player.P2;
             }
@@ -228,13 +231,14 @@ public class Game
             BoardHeight = 7;
             BoardWidth = 7;
             Background = Resources.Load<GameObject>("Prefabs/SumoBackground");
+            CurrentDotCover = Resources.Load<GameObject>("Prefabs/SumoDot");
 
         }
         public GameObject Background { get; set; }
         public Dot StartOfGameDot { get; set; }
         public int BoardHeight { get; set; }
         public int BoardWidth { get; set; }
-
+        public GameObject CurrentDotCover { get; set; }
 
         public void CustomBoardSetup(int boxesX, int boxesY)
         {
@@ -264,6 +268,7 @@ public class Game
         public Dot StartOfGameDot { get; set; }
         public int BoardHeight { get; set; }
         public int BoardWidth { get; set; }
+        public GameObject CurrentDotCover { get; set; }
 
         public void CustomBoardSetup(int boxesX, int boxesY)
         {
@@ -297,6 +302,7 @@ public class Game
         public int BoardWidth { get; set; }
         public List<Dot> PocketDots = new();
 
+        public GameObject CurrentDotCover { get; set; }
         public void CustomBoardSetup(int boxesX, int boxesY)
         {
 
@@ -347,6 +353,7 @@ public class Game
             }
             gameController.game.OnVictory(winner);
         }
+        
     }
 
     public class SoccerBlitz : IGameType
@@ -361,6 +368,7 @@ public class Game
         public Dot StartOfGameDot { get; set; }
         public int BoardHeight { get; set; }
         public int BoardWidth { get; set; }
+        public GameObject CurrentDotCover { get; set; }
 
         public void CustomBoardSetup(int boxesX, int boxesY)
         {

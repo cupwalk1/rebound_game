@@ -23,6 +23,7 @@ public class LineBehavior : MonoBehaviour
     [SerializeField]
     private GameObject Button;
     private bool hasMoved = false;
+    private Vector3 currentPos;
 
 
 
@@ -39,6 +40,8 @@ public class LineBehavior : MonoBehaviour
         SetCurrentDot(GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().game.CurrentGame.StartOfGameDot);
         CurrentPlayer = Player.P2;
         ChangePlayer();
+        BoardManager.Instance.DotCover.transform.SetParent(GameObject.Find("UI").transform);
+        BoardManager.Instance.DotCover.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
     }
 
     void Update()
@@ -72,6 +75,7 @@ public class LineBehavior : MonoBehaviour
                 OnTouchEnded();
                 break;
         }
+        BoardManager.Instance.DotCover.transform.position = currentPos;
     }
 
     private void CheckUndo()
@@ -170,10 +174,11 @@ public class LineBehavior : MonoBehaviour
         }
         if (touchedDot == null)
         {
-
             Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
             touchPos.z = 0;
             currentLine.SetEndDot(null, true);
+            currentPos = new Vector3(Camera.main.ScreenToWorldPoint(touch.position).x, Camera.main.ScreenToWorldPoint(touch.position).y, 0);
+
             if (currentLine.RendererInstance != null) currentLine.RendererInstance.SetPosition(1, touchPos);
             return;
         }
@@ -206,6 +211,7 @@ public class LineBehavior : MonoBehaviour
         }
         else
         {
+            currentPos = touchedDot.Instance.transform.position;
             currentLine.SetEndDot(touchedDot, true);
         }
 
@@ -222,6 +228,7 @@ public class LineBehavior : MonoBehaviour
         if (currentLine.GetEndDot() == null)
         {
             DestroyLine(currentLine);
+            currentPos = currentDot.Instance.transform.position;
             return;
         }
 
@@ -250,6 +257,7 @@ public class LineBehavior : MonoBehaviour
     {
         currentDot = dot;
         availibleDots = currentDot.AvailibleDots();
+        currentPos = currentDot.Instance.transform.position;
     }
 
     public enum Player
@@ -325,7 +333,7 @@ public class Dot
                 LoseDots.Add(d);
                 continue;
             }
-            
+
             bool isConnectedToCurrentDot = false;
             //lb.currentLine.SetEndDot(d);
             //if there is no line between dot and current dot
