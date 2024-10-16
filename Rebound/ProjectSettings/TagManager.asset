@@ -11,6 +11,8 @@ TagManager:
   - GC
   - GrassBG
   - Button
+  - LB
+  - Dots
   layers:
   - Default
   - TransparentFX

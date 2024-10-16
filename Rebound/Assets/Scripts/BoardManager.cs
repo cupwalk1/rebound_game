@@ -1,14 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using JetBrains.Annotations;
-using Mono.Cecil.Cil;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 
 public class BoardManager : Singleton<BoardManager>
@@ -19,9 +11,7 @@ public class BoardManager : Singleton<BoardManager>
     public int coulumns;
     public int rows;
     public int boxesX;
-    public int boxesY;
-    public GameObject DotCover;
-
+    public int boxesY; 
 
 
     private void Awake()
@@ -33,9 +23,9 @@ public class BoardManager : Singleton<BoardManager>
     public void GenerateBoard()
     {
     
-        Game.IGameType CurrentGame = GameObject.Find("GameController").GetComponent<GameController>().game.CurrentGame;
+        Game CurrentGame = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
+        
         _ = Instantiate(CurrentGame.Background, new Vector3(0, 0, 0), Quaternion.identity);
-        DotCover = Instantiate(CurrentGame.CurrentDotCover, new Vector3(0, 0, 0), Quaternion.identity);
         coulumns = CurrentGame.BoardWidth;
         rows = CurrentGame.BoardHeight;
         //Create Centered Array of Dots
@@ -62,14 +52,11 @@ public class BoardManager : Singleton<BoardManager>
                 GameObject instance = Instantiate(dotPrefab, new Vector3(worldPos.x, worldPos.y, 0), Quaternion.identity);
                 Dot.Board[x, y] = new Dot(worldPos.x, worldPos.y, x, y, instance);
                 Dot.Board[x, y].Instance.name = "Dot (" + x + ", " + y + ")";
-                Dot.Board[x, y].Instance.transform.SetParent(GameObject.Find("Dots").transform);
-                Dot.Board[x, y].Instance.GetComponent<CircleCollider2D>().radius = spacing / 3f / Dot.Board[x, y].Instance.transform.localScale.x;
+                Dot.Board[x, y].Instance.GetComponent<CircleCollider2D>().radius = spacing / 2.2f / Dot.Board[x, y].Instance.transform.localScale.x;
             }
         }
 
-
         CurrentGame.CustomBoardSetup(boxesX, boxesY);
-
         List<Dot> outerDots = new();
         // Find Dots that are not adjacent to 8 dots and put them in list
         for (int x = 0; x < coulumns; x++)
@@ -135,7 +122,7 @@ public class BoardManager : Singleton<BoardManager>
             bool inturn = direction2.x == -direction.y && direction2.y == direction.x;
             if (inturn)
             {
-                Line l = new (prevDot, nextDot);
+                Line l = new (Player.none, prevDot, nextDot);
                 l.SetColor(Color.clear);
             }
         }
@@ -149,7 +136,7 @@ public class BoardManager : Singleton<BoardManager>
             Line line;
             if (i == dots.Count - 1)
             {
-                line = new Line(dots[i], dots[0]);
+                line = new Line(Player.none, dots[i], dots[0]);
                 line.SetColor(color);
                 break;
             }
@@ -158,7 +145,7 @@ public class BoardManager : Singleton<BoardManager>
             Dot nextDot = dots[i + 1];
 
             // Check for outward turn and draw diagonal line
-            line = new Line(currentDot, nextDot);
+            line = new Line(Player.none, currentDot, nextDot);
             line.SetColor(color);
         }
     }
