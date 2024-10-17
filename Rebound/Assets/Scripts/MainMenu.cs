@@ -19,16 +19,16 @@ public class MainMenu : MonoBehaviour
         gameController.StartGame(Game.GameType.Sumo);
     }
 
-    public void OnGolfClick()
+    public void OnHockeyClick()
     {
         GameController gameController = GameObject.Find("GameController").GetComponent<GameController>();
-        gameController.StartGame(Game.GameType.Golf);
+        gameController.StartGame(Game.GameType.Hockey);
     }
 
-    public void OnPoolClick()
+    public void OnFencingClick()
     {
         GameController gameController = GameObject.Find("GameController").GetComponent<GameController>();
-        gameController.StartGame(Game.GameType.Pool);
+        gameController.StartGame(Game.GameType.Fencing);
     }
 
     public void OnSoccerBlitzClick()

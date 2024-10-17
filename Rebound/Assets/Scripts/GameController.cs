@@ -59,11 +59,11 @@ private IEnumerator<object> LoadGameScene(Game.GameType GameMode)
         case Game.GameType.Sumo:
             CurrentGame = new Sumo();
             break;
-        case Game.GameType.Golf:
-            CurrentGame = new Golf();
+        case Game.GameType.Hockey:
+            CurrentGame = new Hockey();
             break;
-        case Game.GameType.Pool:
-            CurrentGame = new Pool();
+        case Game.GameType.Fencing:
+            CurrentGame = new Fencing();
             break;
         case Game.GameType.SoccerBlitz:
             CurrentGame = new SoccerBlitz();

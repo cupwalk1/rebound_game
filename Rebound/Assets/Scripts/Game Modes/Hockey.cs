@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Golf : Game
+public class Hockey : Game
 {
 
    public override GameObject Background { get; protected set; }
@@ -10,7 +10,7 @@ public class Golf : Game
    public override int BoardWidth { get; protected set; }
    public override GameObject CurrentDotCover { get; protected set; }
 
-   public Golf()
+   public Hockey()
    {
       BoardHeight = 15;
       BoardWidth = 7;

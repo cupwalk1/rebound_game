@@ -405,7 +405,7 @@ GameObject:
   - component: {fileID: 190091271}
   - component: {fileID: 190091273}
   m_Layer: 5
-  m_Name: Pool
+  m_Name: Fencing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -424,7 +424,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1688204682}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -515,7 +515,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 387670829}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: OnPoolClick
+        m_MethodName: OnFencingClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -538,7 +538,7 @@ GameObject:
   - component: {fileID: 284957744}
   - component: {fileID: 284957746}
   m_Layer: 5
-  m_Name: Golf
+  m_Name: Hockey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -648,7 +648,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 387670829}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: OnGolfClick
+        m_MethodName: OnHockeyClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1101,11 +1101,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boardManager: {fileID: 0}
   GameMode: 0
+  WinnerText: {fileID: 0}
   SoccerBackground: {fileID: 7994872584021435905, guid: a35838c3fac0c477888675864da47464, type: 3}
   SumoBackground: {fileID: 0}
   GolfBackground: {fileID: 0}
   PoolBackground: {fileID: 0}
   SoccerBlitzBackground: {fileID: 0}
+  undoButton: {fileID: 0}
 --- !u!4 &1204636172
 Transform:
   m_ObjectHideFlags: 0
@@ -1239,7 +1241,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1688204682}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1732,8 +1734,8 @@ RectTransform:
   m_Children:
   - {fileID: 847521005}
   - {fileID: 1497172561}
-  - {fileID: 190091270}
   - {fileID: 1256199370}
+  - {fileID: 190091270}
   - {fileID: 284957743}
   - {fileID: 150685712}
   m_Father: {fileID: 4731639}

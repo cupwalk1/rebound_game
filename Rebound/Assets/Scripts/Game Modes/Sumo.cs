@@ -57,6 +57,7 @@ public class Sumo : Game
    {
       base.OnBeginLine();
       IPlayer otherPlayer = Player.CurrentPlayer == Player.player1 ? Player.player2 : Player.player1;
+      if (currentLine.GetStartDot() == StartOfGameDot) return;
       if (Line.LineHistory[^2]?.LinePlayer != Player.CurrentPlayer) startOfTurnDot = otherPlayer.lastDot;
       
    }

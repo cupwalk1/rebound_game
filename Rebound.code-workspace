@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "Rebound"
+		}
+	],
+	"settings": {
+		"omnisharp.useModernNet": false,
+		"dotnet.defaultSolution": "Rebound.sln"
+	}
+}

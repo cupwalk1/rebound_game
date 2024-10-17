@@ -32,8 +32,8 @@ public abstract class Game
    {
       Soccer,
       Sumo,
-      Golf,
-      Pool,
+      Hockey,
+      Fencing,
       SoccerBlitz
    }
    public void SetupBoard()

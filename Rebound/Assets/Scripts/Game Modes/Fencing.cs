@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Pool : Game
+public class Fencing : Game
 {
-   public Pool()
+   public Fencing()
    {
       BoardHeight = 9;
       BoardWidth = 7;
@@ -64,6 +64,7 @@ public class Pool : Game
    {
       base.OnBeginLine();
       IPlayer otherPlayer = Player.CurrentPlayer == Player.player1 ? Player.player2 : Player.player1;
+      if (currentLine.GetStartDot() == StartOfGameDot) return;
       if (Line.LineHistory[^2]?.LinePlayer != Player.CurrentPlayer) startOfTurnDot = otherPlayer.lastDot;
       
    }
