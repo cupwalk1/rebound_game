@@ -11,23 +11,20 @@ using UnityEngine.SceneManagement;
 
 public static class Player
 {
-   public static IPlayer player1;
-   public static IPlayer player2;
-   public static IPlayer none;
+   public static IPlayer Player1;
+   public static IPlayer Player2;
+   public static IPlayer None;
    public static IPlayer CurrentPlayer;
-
-   public static readonly Color player2Color = Color.blue; 
+   public static IPlayer Opponent => CurrentPlayer == Player1 ? Player2 : Player1;
+   public static readonly Color Player1Color = Color.red;
+   public static readonly Color Player2Color = Color.blue; 
    
    static Player()
    {
-      player1 = new P1();
-      player2 = new P2();
-      none = new None();
-      CurrentPlayer = player1;
+      Player1 = new P1();
+      Player2 = new P2();
+      None = new None();
+      CurrentPlayer = Player1;
    }
-
-   public static void SwitchPlayer()
-   {
-
-   }
+   
 }

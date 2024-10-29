@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class P2 : IPlayer
 {
-   public Color color { get; set; } = Color.blue;
-   public Dot lastDot { get; set; }
-   public string name { get; set; } = "Player 2";
+   public Color Color { get; set; } = Color.blue;
+   public Dot LastDot { get; set; }
+   public string Name { get; set; } = "Player 2";
 }

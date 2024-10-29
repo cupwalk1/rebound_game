@@ -12,8 +12,8 @@ public class SnapGrassToField : MonoBehaviour
         RawImage ri = GetComponent<RawImage>();
         Rect rect = ri.uvRect;
         float dotdistanceY = bm.spacing; 
-        float H = (.125f*Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 0)).y)/(dotdistanceY);
-        rect.height = H;
+        float h = (.125f*Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 0)).y)/(dotdistanceY);
+        rect.height = h;
         ri.uvRect = rect;
 
     }

@@ -2,29 +2,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
-
+using UnityEngine.Serialization;
 
 
 public class LineBehavior : MonoBehaviour
 {
 
-    public List<Dot> validDots = new();
+    public List<Dot> ValidDots = new();
     public IPlayer CurrentPlayer;
-    private Game g;
-    [SerializeField]
-    private GameObject Button;
-    private Vector3 currentPos;
-    private IPlayer c {get => Player.CurrentPlayer; set => Player.CurrentPlayer = value; }
+    private Game _g;
+    [FormerlySerializedAs("Button")] [SerializeField]
+    private GameObject button;
+    private Vector3 _currentPos;
+    private IPlayer C {get => Player.CurrentPlayer; set => Player.CurrentPlayer = value; }
 
     void Start()
     {
-        g = GameObject.Find("GameController").GetComponent<GameController>().CurrentGame;
+        _g = GameObject.Find("GameController").GetComponent<GameController>().CurrentGame;
     }
 
     void Update()
     {
 
-        if (!g.inProgress)
+        if (!_g.InProgress)
         {
             return;
         }
@@ -63,34 +63,34 @@ public class LineBehavior : MonoBehaviour
         {
             return;
         }
-        if (hit.collider.gameObject == g.currentDot.Instance)
+        if (hit.collider.gameObject == _g.CurrentDot.Instance)
         {
-            g.OnBeginLine();
+            _g.OnBeginLine();
         }
     }
 
     private void OnTouchMoved(Touch touch, RaycastHit2D hit)
     {
-        if (g.currentLine == null)
+        if (_g.CurrentLine == null)
         {
             return;
         }
         Dot touchedDot = null;
         if (hit.collider != null)
         {
-            touchedDot = g.availibleDots.FirstOrDefault(d => d.Instance == hit.collider.gameObject);
+            touchedDot = _g.AvailableDots.FirstOrDefault(d => d.Instance == hit.collider.gameObject);
         }
         if (touchedDot == null)
         {
-            g.OnDragLine(touch);
+            _g.OnDragLine(touch);
         }
         else if (touchedDot.AttachedLines.Count > 0)
         {
-            g.OnBounce(touchedDot);
+            _g.OnBounce(touchedDot);
         }
         else
         {
-            g.OnEndLine(touchedDot);
+            _g.OnEndLine(touchedDot);
         }
 
     }
@@ -98,20 +98,20 @@ public class LineBehavior : MonoBehaviour
     private void OnTouchEnded()
     {
 
-        if (g.currentLine == null)
+        if (_g.CurrentLine == null)
         {
             return;
         }
 
-        if (g.currentLine.GetEndDot() == null)
+        if (_g.CurrentLine.GetEndDot() == null)
         {
-            g.OnLineCanceled();
+            _g.OnLineCanceled();
             //If the line is not connected to a dot
         }
-        else if (g.currentLine.GetEndDot().AttachedLines.Count == 0)
+        else if (_g.CurrentLine.GetEndDot().AttachedLines.Count == 0)
         {
             //If the line is connected to a dot with no other lines
-            g.OnLineReleased();
+            _g.OnLineReleased();
         }
     }
 

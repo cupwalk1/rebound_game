@@ -6,8 +6,8 @@ using UnityEngine;
 public class BoardManager : Singleton<BoardManager>
 {
     public float spacing;
-    public List<Dot> orderedList;
-    private GameObject dotPrefab;
+    public List<Dot> OrderedList;
+    private GameObject _dotPrefab;
     public int coulumns;
     public int rows;
     public int boxesX;
@@ -16,18 +16,18 @@ public class BoardManager : Singleton<BoardManager>
 
     private void Awake()
     {
-        dotPrefab = Resources.Load<GameObject>("Prefabs/Dot");
+        _dotPrefab = Resources.Load<GameObject>("Prefabs/Dot");
 
     }
 
     public void GenerateBoard()
     {
     
-        Game CurrentGame = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
+        Game currentGame = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
         
-        _ = Instantiate(CurrentGame.Background, new Vector3(0, 0, 0), Quaternion.identity);
-        coulumns = CurrentGame.BoardWidth;
-        rows = CurrentGame.BoardHeight;
+        _ = Instantiate(currentGame.Background, new Vector3(0, 0, 0), Quaternion.identity);
+        coulumns = currentGame.BoardWidth;
+        rows = currentGame.BoardHeight;
         //Create Centered Array of Dots
         Dot.Board = new Dot[coulumns, rows];
         float width = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x * 2;
@@ -49,14 +49,14 @@ public class BoardManager : Singleton<BoardManager>
             for (int y = 0; y < rows; y++)
             {
                 Vector2 worldPos = new((x * spacing) - offsetX, (y * spacing) - offsetY);
-                GameObject instance = Instantiate(dotPrefab, new Vector3(worldPos.x, worldPos.y, 0), Quaternion.identity);
+                GameObject instance = Instantiate(_dotPrefab, new Vector3(worldPos.x, worldPos.y, 0), Quaternion.identity);
                 Dot.Board[x, y] = new Dot(worldPos.x, worldPos.y, x, y, instance);
                 Dot.Board[x, y].Instance.name = "Dot (" + x + ", " + y + ")";
                 Dot.Board[x, y].Instance.GetComponent<CircleCollider2D>().radius = spacing / 2.2f / Dot.Board[x, y].Instance.transform.localScale.x;
             }
         }
 
-        CurrentGame.CustomBoardSetup(boxesX, boxesY);
+        currentGame.CustomBoardSetup(boxesX, boxesY);
         List<Dot> outerDots = new();
         // Find Dots that are not adjacent to 8 dots and put them in list
         for (int x = 0; x < coulumns; x++)
@@ -72,16 +72,16 @@ public class BoardManager : Singleton<BoardManager>
         }
 
         // Order list finding neighbor outer dots one after another
-        orderedList = new() { outerDots[0] };
-        Dot CurrentDot = outerDots[0];
+        OrderedList = new() { outerDots[0] };
+        Dot currentDot = outerDots[0];
         for (int i = 0; i < outerDots.Count; i++)
         {
             // Made list of adjacent dots to CurrentDot
-            List<Dot> neighbours = CurrentDot.GetNeighbours();
+            List<Dot> neighbours = currentDot.GetNeighbours();
             List<Dot> adjacentList = new();
             foreach (Dot dot in neighbours)
             {
-                if (dot.X == CurrentDot.X || dot.Y == CurrentDot.Y)
+                if (dot.X == currentDot.X || dot.Y == currentDot.Y)
                 {
                     adjacentList.Add(dot);
                 }
@@ -90,18 +90,18 @@ public class BoardManager : Singleton<BoardManager>
 
             foreach (Dot dot in adjacentList)
             {
-                if (outerDots.Contains(dot) && !orderedList.Contains(dot))
+                if (outerDots.Contains(dot) && !OrderedList.Contains(dot))
                 {
-                    orderedList.Add(dot);
-                    CurrentDot = dot;
+                    OrderedList.Add(dot);
+                    currentDot = dot;
                     break;
                 }
             }
         }
-        DrawOuterDiagonalDots(orderedList);
+        DrawOuterDiagonalDots(OrderedList);
 
         // Connect the dots in the ordered list
-        ConnectBorderDots(orderedList, Color.white);
+        ConnectBorderDots(OrderedList, Color.white);
     }
 
     private void DrawOuterDiagonalDots(List<Dot> orderedList)
@@ -122,7 +122,7 @@ public class BoardManager : Singleton<BoardManager>
             bool inturn = direction2.x == -direction.y && direction2.y == direction.x;
             if (inturn)
             {
-                Line l = new (Player.none, prevDot, nextDot);
+                Line l = new (Player.None, prevDot, nextDot);
                 l.SetColor(Color.clear);
             }
         }
@@ -136,7 +136,7 @@ public class BoardManager : Singleton<BoardManager>
             Line line;
             if (i == dots.Count - 1)
             {
-                line = new Line(Player.none, dots[i], dots[0]);
+                line = new Line(Player.None, dots[i], dots[0]);
                 line.SetColor(color);
                 break;
             }
@@ -145,14 +145,14 @@ public class BoardManager : Singleton<BoardManager>
             Dot nextDot = dots[i + 1];
 
             // Check for outward turn and draw diagonal line
-            line = new Line(Player.none, currentDot, nextDot);
+            line = new Line(Player.None, currentDot, nextDot);
             line.SetColor(color);
         }
     }
 
     public List<Dot> GetOuterDots()
     {
-        return orderedList;
+        return OrderedList;
     }
 
 }

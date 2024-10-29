@@ -4,25 +4,25 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScrollingBG : MonoBehaviour
+public class ScrollingBg : MonoBehaviour
 {
-    Rect rect;
+    Rect _rect;
     // Start is called before the first frame update
     void Start()
     {
-rect = GetComponent<RawImage>().uvRect;
+_rect = GetComponent<RawImage>().uvRect;
     }
 
     // Update is called once per frame
     void Update()
     {
         RawImage ri = GetComponent<RawImage>();
-        rect.y -= Time.deltaTime / 15;
-        if (rect.y < 0)
+        _rect.y -= Time.deltaTime / 15;
+        if (_rect.y < 0)
         {
-            rect.y += 1;
+            _rect.y += 1;
         }
-        ri.uvRect = rect;
+        ri.uvRect = _rect;
         
     }
 }

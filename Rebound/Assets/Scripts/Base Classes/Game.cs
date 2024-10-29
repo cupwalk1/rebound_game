@@ -6,26 +6,32 @@ using UnityEngine.UI;
 
 public abstract class Game
 {
-   public Dot startOfTurnDot;
-   public List<Dot> availibleDots;
-   public Dot currentDot;
-   public Line currentLine;
-   private List<Dot> OuterDots;
-   public bool inProgress = true;
-   public GameController gameController;
+   public Dot StartOfTurnDot;
+   public List<Dot> AvailableDots;
+   private Dot _currentDot;
+   public virtual Dot CurrentDot
+   {
+      get => _currentDot;
+      set
+      {
+         _currentDot = value;
+      }
+   }
+   public Line CurrentLine;
+   private List<Dot> _outerDots;
+   public bool InProgress = true;
+   public GameController GameController;
    public abstract int BoardHeight { get; protected set; }
    public abstract int BoardWidth { get; protected set; }
 
    public abstract Dot StartOfGameDot { get; protected set; }
-   GameObject DotCover { get; set; }
    public abstract GameObject Background { get; protected set; }
-   public abstract GameObject CurrentDotCover { get; protected set; }
 
-   public abstract void CustomBoardSetup(int BoxesX, int BoxesY);
+   public abstract void CustomBoardSetup(int boxesX, int boxesY);
    protected abstract void CheckForWin();
 
-   public LineBehavior currentLinePath;
-   private GameObject WinnerText;
+   public LineBehavior CurrentLinePath;
+   private GameObject _winnerText;
 
    public enum GameType
    {
@@ -35,24 +41,21 @@ public abstract class Game
       Fencing,
       SoccerBlitz
    }
-
+   
    public void SetupBoard()
    {
       AddLineBehavior();
 
-      WinnerText = GameObject.Find("UI/WinnerText");
+      _winnerText = GameObject.Find("UI/WinnerText");
       BoardManager.Instance.GenerateBoard();
       foreach (GameObject i in GameObject.FindGameObjectsWithTag("PlayerIndicator"))
       {
-         i.GetComponent<Image>().color = Player.CurrentPlayer.color;
+         i.GetComponent<Image>().color = Player.CurrentPlayer.Color;
       }
 
-      OuterDots = BoardManager.Instance.GetOuterDots();
-      DotCover = Object.Instantiate(CurrentDotCover, new Vector3(0, 0, 0), Quaternion.identity);
-      DotCover.transform.SetParent(GameObject.Find("UI").transform);
-      DotCover.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+      _outerDots = BoardManager.Instance.GetOuterDots();
 
-      startOfTurnDot = StartOfGameDot;
+      StartOfTurnDot = StartOfGameDot;
 
 
       SetCurrentDot(StartOfGameDot);
@@ -64,25 +67,26 @@ public abstract class Game
       line.GetStartDot().AttachedLines.Remove(line);
       line.GetEndDot()?.AttachedLines.Remove(line);
       Object.Destroy(line.Instance);
-      currentLine = null;
+      CurrentLine = null;
    }
+
 
    public void SetCurrentDot(Dot dot)
    {
-      currentDot = dot;
-      availibleDots = currentDot.AvailibleDots();
-      UpdateDotCoverPosition(dot.Instance.transform.position);
+      CurrentDot = dot;
+      AvailableDots = CurrentDot.AvailibleDots();
    }
+
 
    protected void OnVictory(IPlayer winner)
    {
       GameObject[] particles = GameObject.FindGameObjectsWithTag("WinnerCoriandoli");
-      inProgress = false;
-      WinnerText.SetActive(true);
+      InProgress = false;
+      _winnerText.SetActive(true);
       GameObject.FindGameObjectWithTag("Button").GetComponent<Button>().interactable = false;
       GameObject.Find("UI/backgroundWin").GetComponent<Image>().enabled = true;
-      WinnerText.GetComponent<TMP_Text>().text = winner.name + " Wins!";
-      WinnerText.GetComponent<TMP_Text>().color = winner.color;
+      _winnerText.GetComponent<TMP_Text>().text = winner.Name + " Wins!";
+      _winnerText.GetComponent<TMP_Text>().color = winner.Color;
 
       foreach (GameObject particle in particles)
       {
@@ -90,94 +94,85 @@ public abstract class Game
       }
    }
 
-   private void UpdateDotCoverPosition(Vector3 pos)
-   {
-      DotCover.transform.position = pos;
-   }
+
 
    public virtual void OnBeginLine()
    {
-      SetCurrentDot(currentDot);
-      if (currentDot.AttachedLines.Count == 1) startOfTurnDot = currentDot;
-      currentLine = new Line(Player.CurrentPlayer, currentDot, isGameLine: true);
+      SetCurrentDot(CurrentDot);
+      if (CurrentDot.AttachedLines.Count == 1) StartOfTurnDot = CurrentDot;
+      CurrentLine = new Line(Player.CurrentPlayer, CurrentDot, isGameLine: true);
    }
+
 
    public virtual void OnDragLine(Touch touch)
    {
-      Vector3 touchPos = Camera.main!.ScreenToWorldPoint(touch.position);
+      var touchPos = Camera.main!.ScreenToWorldPoint(touch.position);
       touchPos.z = 0;
-      currentLine.SetEndDot(null, true);
-      UpdateDotCoverPosition(touchPos);
-      if (currentLine.RendererInstance != null) currentLine.RendererInstance.SetPosition(1, touchPos);
+      CurrentLine.SetEndDot(null, true);
+      if (CurrentLine.RendererInstance != null) CurrentLine.RendererInstance.SetPosition(1, touchPos);
    }
-
+   
    public virtual void OnBounce(Dot touchedDot)
    {
-      currentLine.SetEndDot(touchedDot);
-      CheckForWin();
-      if (currentDot.LoseDots.Contains(touchedDot))
+      CurrentLine.SetEndDot(touchedDot);
+      if (CurrentDot.LoseDots.Contains(touchedDot))
       {
-         GameController gc = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>();
          switch (Player.CurrentPlayer)
          {
             case P1:
-               OnVictory(Player.player2);
+               OnVictory(Player.Player2);
                break;
             case P2:
-               OnVictory(Player.player1);
+               OnVictory(Player.Player1);
                break;
          }
       }
-
       SetCurrentDot(touchedDot);
-      if (OuterDots.Contains(currentDot))
+      CheckForWin();
+      if (_outerDots.Contains(CurrentDot))
       {
-         currentDot.SetColor(Player.CurrentPlayer.color);
-         currentDot.Instance.GetComponent<SpriteRenderer>().sortingOrder = 10;
-         currentLine.Instance.GetComponent<LineRenderer>().sortingOrder = 9;
+         CurrentDot.SetColor(Player.CurrentPlayer.Color);
+         CurrentDot.Instance.GetComponent<SpriteRenderer>().sortingOrder = 10;
+         CurrentLine.Instance.GetComponent<LineRenderer>().sortingOrder = 9;
       }
-
-      currentLine = new Line(Player.CurrentPlayer, currentDot, isGameLine: true);
+      CurrentLine = new Line(Player.CurrentPlayer, CurrentDot, isGameLine: true);
    }
 
    public virtual void OnEndLine(Dot touchedDot)
    {
-      UpdateDotCoverPosition(touchedDot.Instance.transform.position);
-      currentLine.SetEndDot(touchedDot, true);
+      CurrentLine.SetEndDot(touchedDot, true);
    }
 
    public virtual void OnLineCanceled()
    {
-      UpdateDotCoverPosition(currentLine.GetStartDot().Instance.transform.position);
-      DestroyLine(currentLine);
+      DestroyLine(CurrentLine);
    }
 
    public virtual void OnLineReleased()
    {
-      currentLine.SetEndDot(currentLine.GetEndDot());
-      SetCurrentDot(currentLine.GetEndDot());
-      currentLine = null;
+      CurrentLine.SetEndDot(CurrentLine.GetEndDot());
+      SetCurrentDot(CurrentLine.GetEndDot());
+      CurrentLine = null;
       SwitchPlayer();
-      UpdateDotCoverPosition(currentDot.Instance.transform.position);
    }
 
    public virtual void SwitchPlayer()
    {
-      Player.CurrentPlayer.lastDot = currentDot;
-      Player.CurrentPlayer = Player.CurrentPlayer == Player.player1 ? Player.player2 : Player.player1;
+      Player.CurrentPlayer.LastDot = CurrentDot;
+      Player.CurrentPlayer = Player.CurrentPlayer == Player.Player1 ? Player.Player2 : Player.Player1;
       foreach (GameObject i in GameObject.FindGameObjectsWithTag("PlayerIndicator"))
       {
-         i.GetComponent<Image>().color = Player.CurrentPlayer.color;
+         i.GetComponent<Image>().color = Player.CurrentPlayer.Color;
       }
    }
 
-   public void AddLineBehavior()
+   protected void AddLineBehavior()
    {
-      if (currentLinePath == null)
+      if (CurrentLinePath == null)
       {
          GameObject go = new("LineBehavior");
          go.AddComponent<LineBehavior>();
-         currentLinePath = go.GetComponent<LineBehavior>();
+         CurrentLinePath = go.GetComponent<LineBehavior>();
       }
    }
 

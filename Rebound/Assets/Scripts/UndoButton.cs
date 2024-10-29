@@ -4,11 +4,10 @@ using UnityEngine.UI;
 
 public class UndoButton : MonoBehaviour
 {
-   private Game g;
+   private Game _g;
    public bool hasMoved = false;
    public LineBehavior linePath;
-   public Dot CurrentDot;
-   private Line lastLine;
+   private Line _lastLine;
    
    void Update()
    {
@@ -17,45 +16,47 @@ public class UndoButton : MonoBehaviour
          GetComponent<Button>().interactable = false;
          return;
       }
-      g = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
-      lastLine = Line.LineHistory.Last();
-      if (!g.inProgress || (lastLine.EndDot == g.startOfTurnDot && lastLine.LinePlayer != Player.CurrentPlayer))
+      _g = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
+      _lastLine = Line.LineHistory.Last();
+      //The cases for which the back button should be disabled.
+      //If game's not in progress or (the StartOfTurnDot has been set to current dot by OnBeginLine() and the last line was of the opponent) or the player is dragging the line.... Phew, that was LOOONNNGGGGG.
+      if (!_g.InProgress || (_g.CurrentDot == _g.StartOfTurnDot && _lastLine.LinePlayer != Player.CurrentPlayer) || (_g.CurrentLine != null &&  _g.CurrentLine?.GetEndDot() == null) )
       {
-         GetComponent<Button>().interactable = false;
+         if (GetComponent<Button>().interactable == true)  GetComponent<Button>().interactable = false;
       }
       else
       {
-         GetComponent<Button>().interactable = true;
+         if (GetComponent<Button>().interactable == false) GetComponent<Button>().interactable = true;
       }
    }
    
    void Start()
    {
       GetComponent<Button>().onClick.AddListener(CheckUndo);
-      g = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
+      _g = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
 
    }
 
    private void CheckUndo()
    {
-      g = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
+      _g = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
       
       
       
-      linePath = g.currentLinePath;
+      linePath = _g.CurrentLinePath;
       if (Line.LineHistory.Count == 0) return;
 
-      lastLine = Line.LineHistory.Last();
+      _lastLine = Line.LineHistory.Last();
 
 
-      if (lastLine.EndDot == g.startOfTurnDot && lastLine.LinePlayer != Player.CurrentPlayer)
+      if (_lastLine.EndDot == _g.StartOfTurnDot && _lastLine.LinePlayer != Player.CurrentPlayer)
       {
          return;
       }
-      else if (lastLine.LinePlayer != Player.CurrentPlayer)
+      else if (_lastLine.LinePlayer != Player.CurrentPlayer)
       {
          
-         g.SwitchPlayer();
+         _g.SwitchPlayer();
          Undo();
          return;
       }
@@ -68,12 +69,12 @@ public class UndoButton : MonoBehaviour
 
    private void Undo()
    {
-      g.ExtraUndoBehavior();
-      g.SetCurrentDot(Line.LineHistory.Last().GetStartDot());
-      g.DestroyLine(Line.LineHistory.Last());
+      _g.ExtraUndoBehavior();
+      _g.SetCurrentDot(Line.LineHistory.Last().GetStartDot());
+      _g.DestroyLine(Line.LineHistory.Last());
       if (Line.LineHistory.Count == 0)
       {
-         g.SetCurrentDot(g.StartOfGameDot);
+         _g.SetCurrentDot(_g.StartOfGameDot);
          return;
       }
       

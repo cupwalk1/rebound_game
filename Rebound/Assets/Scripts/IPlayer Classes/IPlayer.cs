@@ -2,7 +2,7 @@ using UnityEngine;
 
 public interface IPlayer
 {
-   public Color color { get; set; }
-   public Dot lastDot { get; set; }
-   string name { get; set; }
+   public Color Color { get; set; }
+   public Dot LastDot { get; set; }
+   string Name { get; set; }
 }

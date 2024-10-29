@@ -2,7 +2,12 @@ using UnityEngine;
 
 public abstract class TwoLineGame : Game
 {
-   public abstract GameObject SecondDotCover { get; protected set; }
+   public override Dot CurrentDot
+   {
+      get => Player.CurrentPlayer.LastDot;
+      set { Player.CurrentPlayer.LastDot = value; }
+   }
+
    protected virtual void ExtraWinConditions(){}
    protected sealed override void CheckForWin()
    {
@@ -21,21 +26,22 @@ public abstract class TwoLineGame : Game
             }
          }
       }
-      OnVictory(Player.none);
+      OnVictory(Player.None);
    }
    
    public sealed override void SwitchPlayer()
    {
       base.SwitchPlayer();
-      currentDot = Player.CurrentPlayer.lastDot;
+      CurrentDot = Player.CurrentPlayer.LastDot;
    }
    
    public override void OnBeginLine()
    {
       base.OnBeginLine();
-      IPlayer otherPlayer = Player.CurrentPlayer == Player.player1 ? Player.player2 : Player.player1;
-      if (currentLine.GetStartDot() == StartOfGameDot) return;
-      if (Line.LineHistory[^2]?.LinePlayer != Player.CurrentPlayer) startOfTurnDot = otherPlayer.lastDot;
+      IPlayer otherPlayer = Player.CurrentPlayer == Player.Player1 ? Player.Player2 : Player.Player1;
+      if (CurrentLine.GetStartDot() == StartOfGameDot) return;
+      if (Line.LineHistory[^2]?.LinePlayer != Player.CurrentPlayer && CurrentLine.GetStartDot() != StartOfGameDot) StartOfTurnDot = Player.CurrentPlayer.LastDot;
+      
       
    }
 }

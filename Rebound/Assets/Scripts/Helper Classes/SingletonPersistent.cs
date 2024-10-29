@@ -1,29 +1,29 @@
 using UnityEngine;
 public class SingletonPersistent<T> : MonoBehaviour where T : Component
 {
-    private static T instance;
+    private static T _instance;
 
     public static T Instance
     {
         get
         {
-            return instance;
+            return _instance;
         }
     }
 
     private void OnDestroy()
     {
-        if (instance == this)
+        if (_instance == this)
         {
-            instance = null;
+            _instance = null;
         }
     }
 
     protected virtual void Awake()
     {
-        if (instance == null)
+        if (_instance == null)
         {
-            instance = this as T;
+            _instance = this as T;
             DontDestroyOnLoad(this.gameObject);
         }
         else

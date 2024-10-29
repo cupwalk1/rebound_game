@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class None : IPlayer
 {
-   public LineBehavior playerLine { get; set; }
-   public Color color { get; set; } = Color.white;
-   public Dot lastDot { get; set; }
-   public string name { get; set; } = "Nobody";
+   public LineBehavior PlayerLine { get; set; }
+   public Color Color { get; set; } = Color.white;
+   public Dot LastDot { get; set; }
+   public string Name { get; set; } = "Nobody";
 }

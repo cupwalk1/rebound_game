@@ -2,13 +2,13 @@ using System;
 
 using UnityEngine;
 
-public class SoccerBlitz : Game
+public sealed class SoccerBlitz : Game
 {
-   public sealed override GameObject Background { get; protected set; }
+   public override GameObject Background { get; protected set; }
    public override Dot StartOfGameDot { get; protected set; }
-   public sealed override int BoardHeight { get; protected set; }
-   public sealed override int BoardWidth { get; protected set; }
-   public override GameObject CurrentDotCover { get; protected set; }
+   public override int BoardHeight { get; protected set; }
+   public override int BoardWidth { get; protected set; }
+
 
    public SoccerBlitz()
    {

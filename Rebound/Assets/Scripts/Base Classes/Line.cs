@@ -31,7 +31,7 @@ public class Line
         }
         if (player != null)
         {
-            SetColor(player.color);
+            SetColor(player.Color);
         }
         else
         {
@@ -58,11 +58,11 @@ public class Line
     {
         return EndDot;
     }
-    public void SetEndDot(Dot dot, bool NoAttachment = false)
+    public void SetEndDot(Dot dot, bool noAttachment = false)
     {
         EndDot = dot;
         if (dot == null) return;
-        if (!NoAttachment) dot.AttachedLines.Add(this);
+        if (!noAttachment) dot.AttachedLines.Add(this);
 
         Instance.GetComponent<LineRenderer>().SetPosition(1, dot.Instance.transform.position);
     }
