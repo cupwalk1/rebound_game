@@ -93,7 +93,7 @@ public sealed class Hockey : TwoLineGame
    public override void OnBeginLine()
    {
       base.OnBeginLine();
-      if (currentLine.GetStartDot() == Player.CurrentPlayer.lastDot && puck._puckHolder != Player.CurrentPlayer)
+      if (currentLine.GetStartDot() == Player.CurrentPlayer.lastDot && puck.PuckHolder != Player.CurrentPlayer)
       {
          hasExtraMove = true;
       }
@@ -113,28 +113,27 @@ public sealed class Hockey : TwoLineGame
    public override void OnDragLine(Touch touch)
    {
       base.OnDragLine(touch);
-      if (Player.CurrentPlayer == puck._puckHolder) puck.SetPosition(Camera.main!.ScreenToWorldPoint(touch.position));
+      if (Player.CurrentPlayer == puck.PuckHolder) puck.SetPosition(Camera.main!.ScreenToWorldPoint(touch.position));
    }
 
    public override void OnBounce(Dot touchedDot)
    {
       base.OnBounce(touchedDot);
-      if (puck._puckHolder == Player.CurrentPlayer)
+      if (puck.PuckHolder == Player.CurrentPlayer)
       {
-         puck.SetPosition(touchedDot);
+         
       }
       else if(touchedDot == puck._puckDot)
       {
          puck._lastStealDot = touchedDot;
-         puck._puckHolder = Player.CurrentPlayer;
-         puck.SetPosition(touchedDot);
+         puck.PuckHolder = Player.CurrentPlayer;
       }
       
    }
 
    public override void OnEndLine(Dot touchedDot)
    {
-      if (hasExtraMove && Player.CurrentPlayer != puck._puckHolder)
+      if (hasExtraMove && Player.CurrentPlayer != puck.PuckHolder)
       {
          //can double bounce
          hasExtraMove = false;
@@ -144,7 +143,7 @@ public sealed class Hockey : TwoLineGame
       }
       base.OnEndLine(touchedDot);
       //move puck with currentPlayer
-      if (puck._puckHolder == Player.CurrentPlayer)
+      if (puck.PuckHolder == Player.CurrentPlayer)
       {
          puck.SetPosition(touchedDot);
       }
@@ -155,8 +154,7 @@ public sealed class Hockey : TwoLineGame
       if (puck._lastStealDot == currentDot)
       {
          puck._lastStealDot = null;
-         puck._puckHolder = Player.CurrentPlayer == Player.player1 ? Player.player2 : Player.player1;
-         puck.SetPosition(currentDot);
+         puck.PuckHolder = Player.CurrentPlayer == Player.player1 ? Player.player2 : Player.player1;
          return;
       }
       if (puck._lastDoubleBounceDot == currentDot)
@@ -165,7 +163,7 @@ public sealed class Hockey : TwoLineGame
          hasExtraMove = true;
          return;
       }
-      puck.SetPosition(Line.LineHistory[^1].GetStartDot());
+      puck.PuckHolder = Player.CurrentPlayer;
       
    }
 }
@@ -177,7 +175,21 @@ public class Puck
    public Dot _lastStealDot;
    public GameObject _puckPrefab;
    public Dot _puckDot;
-   public IPlayer _puckHolder;
+   private IPlayer _puckHolder;
+
+   public IPlayer PuckHolder
+   {
+      get
+      {
+         return _puckHolder;
+      }
+      set
+      {
+         SetPosition(value.lastDot);
+         _puckHolder = value;
+      }
+   }
+
    public GameObject _instance;
    public Puck(Dot dot)
    {
