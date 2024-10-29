@@ -8,20 +8,44 @@ public class UndoButton : MonoBehaviour
    public bool hasMoved = false;
    public LineBehavior linePath;
    public Dot CurrentDot;
-
-   // Start is called before the first frame update
+   private Line lastLine;
+   
+   void Update()
+   {
+      if (Line.LineHistory.Count == 0)
+      {
+         GetComponent<Button>().interactable = false;
+         return;
+      }
+      g = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
+      lastLine = Line.LineHistory.Last();
+      if (!g.inProgress || (lastLine.EndDot == g.startOfTurnDot && lastLine.LinePlayer != Player.CurrentPlayer))
+      {
+         GetComponent<Button>().interactable = false;
+      }
+      else
+      {
+         GetComponent<Button>().interactable = true;
+      }
+   }
+   
    void Start()
    {
       GetComponent<Button>().onClick.AddListener(CheckUndo);
+      g = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
+
    }
 
    private void CheckUndo()
    {
       g = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
+      
+      
+      
       linePath = g.currentLinePath;
       if (Line.LineHistory.Count == 0) return;
 
-      Line lastLine = Line.LineHistory.Last();
+      lastLine = Line.LineHistory.Last();
 
 
       if (lastLine.EndDot == g.startOfTurnDot && lastLine.LinePlayer != Player.CurrentPlayer)
@@ -30,6 +54,7 @@ public class UndoButton : MonoBehaviour
       }
       else if (lastLine.LinePlayer != Player.CurrentPlayer)
       {
+         
          g.SwitchPlayer();
          Undo();
          return;
@@ -43,6 +68,7 @@ public class UndoButton : MonoBehaviour
 
    private void Undo()
    {
+      g.ExtraUndoBehavior();
       g.SetCurrentDot(Line.LineHistory.Last().GetStartDot());
       g.DestroyLine(Line.LineHistory.Last());
       if (Line.LineHistory.Count == 0)
@@ -50,6 +76,7 @@ public class UndoButton : MonoBehaviour
          g.SetCurrentDot(g.StartOfGameDot);
          return;
       }
+      
 
       if (BoardManager.Instance.GetOuterDots().Contains(Line.LineHistory.Last().GetStartDot()))
       {

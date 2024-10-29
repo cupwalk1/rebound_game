@@ -3,31 +3,30 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public abstract class Game
 {
    public Dot startOfTurnDot;
    public List<Dot> availibleDots;
-   public UndoButton undoButton;
    public Dot currentDot;
    public Line currentLine;
-   public List<Dot> OuterDots;
+   private List<Dot> OuterDots;
    public bool inProgress = true;
    public GameController gameController;
    public abstract int BoardHeight { get; protected set; }
    public abstract int BoardWidth { get; protected set; }
 
    public abstract Dot StartOfGameDot { get; protected set; }
-   public GameObject DotCover { get; protected set; }
+   GameObject DotCover { get; set; }
    public abstract GameObject Background { get; protected set; }
    public abstract GameObject CurrentDotCover { get; protected set; }
 
    public abstract void CustomBoardSetup(int BoxesX, int BoxesY);
-   public abstract void CustomRules();
-   public abstract void CheckForWin();
+   protected abstract void CheckForWin();
 
    public LineBehavior currentLinePath;
-   public GameObject WinnerText;
-   
+   private GameObject WinnerText;
+
    public enum GameType
    {
       Soccer,
@@ -36,38 +35,36 @@ public abstract class Game
       Fencing,
       SoccerBlitz
    }
+
    public void SetupBoard()
    {
-      
       AddLineBehavior();
-      
+
       WinnerText = GameObject.Find("UI/WinnerText");
-      undoButton = GameObject.FindGameObjectWithTag("Button").GetComponent<UndoButton>();        
       BoardManager.Instance.GenerateBoard();
       foreach (GameObject i in GameObject.FindGameObjectsWithTag("PlayerIndicator"))
       {
          i.GetComponent<Image>().color = Player.CurrentPlayer.color;
       }
+
       OuterDots = BoardManager.Instance.GetOuterDots();
-      DotCover = GameObject.Instantiate(CurrentDotCover, new Vector3(0, 0, 0), Quaternion.identity);
+      DotCover = Object.Instantiate(CurrentDotCover, new Vector3(0, 0, 0), Quaternion.identity);
       DotCover.transform.SetParent(GameObject.Find("UI").transform);
       DotCover.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-      
+
       startOfTurnDot = StartOfGameDot;
-      
+
 
       SetCurrentDot(StartOfGameDot);
-
    }
-   
+
    public void DestroyLine(Line line)
    {
       Line.LineHistory.Remove(line);
       line.GetStartDot().AttachedLines.Remove(line);
       line.GetEndDot()?.AttachedLines.Remove(line);
-      GameObject.Destroy(line.Instance);
+      Object.Destroy(line.Instance);
       currentLine = null;
-
    }
 
    public void SetCurrentDot(Dot dot)
@@ -77,7 +74,7 @@ public abstract class Game
       UpdateDotCoverPosition(dot.Instance.transform.position);
    }
 
-   public void OnVictory(IPlayer winner)
+   protected void OnVictory(IPlayer winner)
    {
       GameObject[] particles = GameObject.FindGameObjectsWithTag("WinnerCoriandoli");
       inProgress = false;
@@ -93,7 +90,7 @@ public abstract class Game
       }
    }
 
-   public void UpdateDotCoverPosition(Vector3 pos)
+   private void UpdateDotCoverPosition(Vector3 pos)
    {
       DotCover.transform.position = pos;
    }
@@ -103,21 +100,19 @@ public abstract class Game
       SetCurrentDot(currentDot);
       if (currentDot.AttachedLines.Count == 1) startOfTurnDot = currentDot;
       currentLine = new Line(Player.CurrentPlayer, currentDot, isGameLine: true);
-      undoButton.hasMoved = false;
    }
 
    public virtual void OnDragLine(Touch touch)
    {
-      Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
+      Vector3 touchPos = Camera.main!.ScreenToWorldPoint(touch.position);
       touchPos.z = 0;
       currentLine.SetEndDot(null, true);
-      UpdateDotCoverPosition(touchPos); 
+      UpdateDotCoverPosition(touchPos);
       if (currentLine.RendererInstance != null) currentLine.RendererInstance.SetPosition(1, touchPos);
    }
-   
+
    public virtual void OnBounce(Dot touchedDot)
    {
-      undoButton.hasMoved = true;
       currentLine.SetEndDot(touchedDot);
       CheckForWin();
       if (currentDot.LoseDots.Contains(touchedDot))
@@ -133,6 +128,7 @@ public abstract class Game
                break;
          }
       }
+
       SetCurrentDot(touchedDot);
       if (OuterDots.Contains(currentDot))
       {
@@ -140,6 +136,7 @@ public abstract class Game
          currentDot.Instance.GetComponent<SpriteRenderer>().sortingOrder = 10;
          currentLine.Instance.GetComponent<LineRenderer>().sortingOrder = 9;
       }
+
       currentLine = new Line(Player.CurrentPlayer, currentDot, isGameLine: true);
    }
 
@@ -157,7 +154,6 @@ public abstract class Game
 
    public virtual void OnLineReleased()
    {
-      undoButton.hasMoved = true;
       currentLine.SetEndDot(currentLine.GetEndDot());
       SetCurrentDot(currentLine.GetEndDot());
       currentLine = null;
@@ -174,7 +170,7 @@ public abstract class Game
          i.GetComponent<Image>().color = Player.CurrentPlayer.color;
       }
    }
-   
+
    public void AddLineBehavior()
    {
       if (currentLinePath == null)
@@ -183,6 +179,7 @@ public abstract class Game
          go.AddComponent<LineBehavior>();
          currentLinePath = go.GetComponent<LineBehavior>();
       }
-
    }
+
+   public virtual void ExtraUndoBehavior(){}
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,11 +5,11 @@ public class Soccer : Game
 {
    public override GameObject Background { get; protected set; }
    public override Dot StartOfGameDot { get; protected set; }
-   public override int BoardHeight { get; protected set; }
+   public sealed override int BoardHeight { get; protected set; }
    public override int BoardWidth { get; protected set; }
    public override GameObject CurrentDotCover { get; protected set; }
-   public List<Dot> P1GoalDots = new();
-   public List<Dot> P2GoalDots = new();
+   readonly List<Dot> P1GoalDots = new();
+   readonly List<Dot> P2GoalDots = new();
    public Soccer()
    {
 
@@ -79,23 +78,13 @@ public class Soccer : Game
 
    }
 
-   public override void CustomRules()
-   {
-      throw new NotImplementedException();
-   }
-
-   public override void CheckForWin()
+   protected override void CheckForWin()
    {
       IPlayer winner;
       if (P1GoalDots.Contains(currentLine.EndDot))
       {
-         winner = currentLine.LinePlayer;
+         OnVictory(currentLine.LinePlayer);
       }
-      else
-      {
-         return;
-      }
-      OnVictory(winner);
 
    }
 }

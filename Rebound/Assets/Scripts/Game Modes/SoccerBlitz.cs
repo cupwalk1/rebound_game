@@ -1,4 +1,5 @@
 using System;
+
 using UnityEngine;
 
 public class SoccerBlitz : Game
@@ -21,12 +22,7 @@ public class SoccerBlitz : Game
       throw new NotImplementedException();
    }
 
-   public override void CustomRules()
-   {
-      throw new NotImplementedException();
-   }
-
-   public override void CheckForWin()
+   protected override void CheckForWin()
    {
       throw new NotImplementedException();
    }
