@@ -28,6 +28,11 @@ public class GameController : MonoBehaviour
    private void Awake()
    {
       Screen.orientation = ScreenOrientation.Portrait;
+      if (Instance != null)
+      {
+         Destroy(this);
+         return;
+      }
       Instance = this;
       DontDestroyOnLoad(gameObject);
    }

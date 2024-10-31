@@ -26,15 +26,5 @@ public sealed class Sumo : TwoLineGame
       Player.Player1.LastDot = StartOfGameDot;
       Player.Player2.LastDot = StartOfGameDot;
    }
-
-
-   protected sealed override void ExtraWinConditions()
-   {
-      if (Line.LineHistory[^1].GetEndDot() == Player.CurrentPlayer.LastDot)
-      {
-         OnVictory(Player.CurrentPlayer);
-         return;
-      }
-   }
    
 }

@@ -14,7 +14,6 @@ public class LineBehavior : MonoBehaviour
     [FormerlySerializedAs("Button")] [SerializeField]
     private GameObject button;
     private Vector3 _currentPos;
-    private IPlayer C {get => Player.CurrentPlayer; set => Player.CurrentPlayer = value; }
 
     void Start()
     {

@@ -4,31 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="65fd8963-4a4e-43fb-b7f5-748200e36784" name="Changes" comment="Split scripts, added more virtual methods that individual games can handle, and added fencing (still have to change name from Pool)">
+    <list default="true" id="65fd8963-4a4e-43fb-b7f5-748200e36784" name="Changes" comment="Finished all games and added a home button.">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rebound/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rebound/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Base Classes/Game.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Base Classes/Game.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Base Classes/Line.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Base Classes/Line.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Base Classes/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Base Classes/Player.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Base Classes/TwoLineGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Base Classes/TwoLineGame.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BoardManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BoardManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Modes/Fencing.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Modes/Fencing.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Modes/Hockey.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Modes/Hockey.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DotPulse.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DotPulse.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SetupScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SetupScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Modes/Soccer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Modes/Soccer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Modes/SoccerBlitz.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Modes/SoccerBlitz.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Modes/Sumo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Modes/Sumo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Helper Classes/Singleton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Helper Classes/Singleton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Helper Classes/SingletonPersistent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Helper Classes/SingletonPersistent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/IPlayer Classes/IPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/IPlayer Classes/IPlayer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/IPlayer Classes/None.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/IPlayer Classes/None.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/IPlayer Classes/P1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/IPlayer Classes/P1.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/IPlayer Classes/P2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/IPlayer Classes/P2.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/LineBehavior.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LineBehavior.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScrollingBG.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScrollingBG.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SnapGrassToField.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SnapGrassToField.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UndoButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UndoButton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/SceneTemplateSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/SceneTemplateSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +140,7 @@
       <workItem from="1729957123356" duration="18050000" />
       <workItem from="1730214764408" duration="2119000" />
       <workItem from="1730217557112" duration="2097000" />
-      <workItem from="1730220100081" duration="15838000" />
+      <workItem from="1730220100081" duration="24604000" />
     </task>
     <task id="LOCAL-00001" summary="Split scripts, added more virtual methods that individual games can handle, and added fencing (still have to change name from Pool)">
       <option name="closed" value="true" />
@@ -165,7 +150,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729108268125</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Finished all games and added a home button.">
+      <option name="closed" value="true" />
+      <created>1730241826312</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1730241826312</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -252,7 +245,8 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Split scripts, added more virtual methods that individual games can handle, and added fencing (still have to change name from Pool)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Split scripts, added more virtual methods that individual games can handle, and added fencing (still have to change name from Pool)" />
+    <MESSAGE value="Finished all games and added a home button." />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished all games and added a home button." />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

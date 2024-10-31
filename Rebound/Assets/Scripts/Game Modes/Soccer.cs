@@ -79,10 +79,13 @@ public class Soccer : Game
    protected override void CheckForWin()
    {
       IPlayer winner;
-      if (_p1GoalDots.Contains(CurrentLine.EndDot))
+      if (_p1GoalDots.Contains(CurrentLine.EndDot) && Player.Player1 == CurrentLine.LinePlayer)
       {
-         OnVictory(CurrentLine.LinePlayer);
+         OnVictory(Player.Player1);
       }
-
+      if (_p2GoalDots.Contains(CurrentLine.EndDot) && Player.Player2 == CurrentLine.LinePlayer)
+      {
+         OnVictory(Player.Player2);
+      }
    }
 }
