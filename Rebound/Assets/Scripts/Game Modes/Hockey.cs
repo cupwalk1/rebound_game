@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework;
 using UnityEngine;
 
 
@@ -11,8 +12,11 @@ public sealed class Hockey : TwoLineGame
    public override Dot StartOfGameDot { get; protected set; }
    public override int BoardHeight { get; protected set; }
    public override int BoardWidth { get; protected set; }
-   readonly List<Dot> _p1GoalDots = new();
-   readonly List<Dot> _p2GoalDots = new();
+   List<Dot> _p1GoalDots = new();
+   List<Dot> _p2GoalDots = new();
+   List<Dot> _p1BackOfGoalDots = new();
+   List<Dot> _p2BackOfGoalDots = new();
+   private List<List<Dot>> invisibleDotChains = new();
    Puck _puck;
 
 
@@ -26,17 +30,7 @@ public sealed class Hockey : TwoLineGame
    public override void CustomBoardSetup(int boxesX, int boxesY)
    {
       int goalBoxes = Mathf.CeilToInt((boxesX / 4f) / 2) * 2;
-      for (int i = 0; i < (boxesX - goalBoxes) / 2; i++)
-      {
-         Object.Destroy(Dot.Board[i, 0].Instance);
-         Object.Destroy(Dot.Board[i, boxesY].Instance);
-         Object.Destroy(Dot.Board[boxesX - i, 0].Instance);
-         Object.Destroy(Dot.Board[boxesX - i, boxesY].Instance);
-         Dot.Board[i, 0] = null;
-         Dot.Board[i, boxesY] = null;
-         Dot.Board[boxesX - i, 0] = null;
-         Dot.Board[boxesX - i, boxesY] = null;
-      }
+
       StartOfGameDot = Player.Player1.LastDot = Dot.Board[(boxesX / 2), boxesY / 2 - 1];
       Player.Player2.LastDot = Dot.Board[(boxesX / 2), boxesY / 2 + 1];
       _puck = new Puck(StartOfGameDot);
@@ -44,51 +38,43 @@ public sealed class Hockey : TwoLineGame
 
       for (int i = 0; i <= goalBoxes; i++)
       {
-         _p1GoalDots.Add(Dot.Board[(boxesX - goalBoxes) / 2 + i, boxesY - 1]);
-         _p2GoalDots.Add(Dot.Board[(boxesX - goalBoxes) / 2 + i, 1]);
+         _p1GoalDots.Add(Dot.Board[(boxesX - goalBoxes) / 2 + i, boxesY - 2]);
+         _p2GoalDots.Add(Dot.Board[(boxesX - goalBoxes) / 2 + i, 2]);
       }
-
-      for (int i = 0; i < _p1GoalDots.Count; i++)
+      _p1BackOfGoalDots.Add(_p1GoalDots[0]);
+      _p2BackOfGoalDots.Add(_p2GoalDots[0]);
+      for (int i = 0; i <= goalBoxes; i++)
       {
-         _p1GoalDots[i].Instance.GetComponent<SpriteRenderer>().color = Player.Player1.Color;
-         if (i == 0)
-         {
-            _p1GoalDots[i].Instance.GetComponent<SpriteRenderer>().color = Color.white;
-         }
-
-         if (i == _p1GoalDots.Count - 1)
-         {
-            _p1GoalDots[i].Instance.GetComponent<SpriteRenderer>().color = Color.white;
-            continue;
-         }
-
-         Line l = new(Player.None, _p1GoalDots[i], _p1GoalDots[i + 1]);
-         l.SetColor(Player.Player1.Color);
+         _p1BackOfGoalDots.Add(Dot.Board[(boxesX - goalBoxes) / 2 + i, boxesY - 1]);
+         _p2BackOfGoalDots.Add(Dot.Board[(boxesX - goalBoxes) / 2 + i, 1]);
       }
+      _p1BackOfGoalDots.Add(_p1GoalDots[^1]);
+      _p2BackOfGoalDots.Add(_p2GoalDots[^1]);
 
-      for (int i = 0; i < _p2GoalDots.Count; i++)
+
+      new DotChain(_p1BackOfGoalDots, Player.None, false).CreateChain();
+      new DotChain(_p2BackOfGoalDots, Player.None, false).CreateChain();
+      new DotChain(_p2GoalDots, Player.Player2, false).CreateChain();
+      new DotChain(_p1GoalDots, Player.Player1, false).CreateChain();
+      
+      
+      invisibleDotChains = new List<List<Dot>>
       {
-         _p2GoalDots[i].Instance.GetComponent<SpriteRenderer>().color = Player.Player2.Color;
-         if (i == 0)
-         {
-            _p2GoalDots[i].Instance.GetComponent<SpriteRenderer>().color = Color.white;
-         }
-
-         if (i == _p2GoalDots.Count - 1)
-         {
-            _p2GoalDots[i].Instance.GetComponent<SpriteRenderer>().color = Color.white;
-            continue;
-         }
-
-         Line l = new(Player.None, _p2GoalDots[i], _p2GoalDots[i + 1]);
-         l.SetColor(Player.Player2.Color);
-         l.Instance.GetComponent<LineRenderer>().sortingOrder = 8;
+         new List<Dot>{_p1GoalDots[0], _p1BackOfGoalDots[2], _p1GoalDots[^1]},
+         new List<Dot>{_p1BackOfGoalDots[1], _p1GoalDots[1], _p1BackOfGoalDots[^2]},
+         new List<Dot>{_p2GoalDots[0], _p2BackOfGoalDots[2], _p2GoalDots[^1]},
+         new List<Dot>{_p2BackOfGoalDots[1], _p2GoalDots[1], _p2BackOfGoalDots[^2]}
+      };
+      foreach (List<Dot> chain in invisibleDotChains)
+      {
+         new DotChain(chain, Player.None).CreateChain(true);
       }
-      //
+
+
    }
 
    public override void OnBeginLine()
-   {
+   {  
       base.OnBeginLine();
       if (CurrentLine.GetStartDot() == StartOfTurnDot && _puck.PuckHolder != Player.CurrentPlayer)
       {

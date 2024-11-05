@@ -9,6 +9,7 @@ Library: /Users/walkupclay/Documents/GitHub/rebound_game/Rebound/Temp/BurstOutpu
 --target-framework=NetFramework
 --generate-link-xml=Temp/burst.link.xml
 --temp-folder=/Users/walkupclay/Documents/GitHub/rebound_game/Rebound/Temp/Burst
+--debug=LineOnly
 --key-folder=/Applications/Unity/Hub/Editor/6000.0.24f1/PlaybackEngines/AndroidPlayer
 --decode-folder=/Users/walkupclay/Documents/GitHub/rebound_game/Rebound/Library/Burst
 --output=/Users/walkupclay/Documents/GitHub/rebound_game/Rebound/Temp/BurstOutput/tempburstlibs/armeabi-v7a/lib_burst_generated

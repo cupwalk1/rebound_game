@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.coffee.softmask-for-ugui": "https://github.com/mob-sakai/SoftMaskForUGUI.git#2.0.0",
     "com.unity.adaptiveperformance.samsung.android": "5.0.0",
     "com.unity.ai.navigation": "2.0.4",
     "com.unity.feature.2d": "2.0.1",

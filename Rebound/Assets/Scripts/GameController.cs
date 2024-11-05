@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour
    public GameObject SoccerBlitzBackground;
    public GameObject undoButton;
    public GameObject homeButton;
+   [SerializeField] private GameObject sceneChangeGameObject;
 
    private void Awake()
    {
@@ -36,27 +37,12 @@ public class GameController : MonoBehaviour
       Instance = this;
       DontDestroyOnLoad(gameObject);
    }
+   
 
-   public void StartGame(Game.GameType gameMode)
+   public async void StartGame(Game.GameType gameMode)
    {
-      if (SceneManager.GetActiveScene().name == "GameScene")
-      {
-         Debug.Log("Game Already Started");
-         return;
-      }
-
-      StartCoroutine(LoadGameScene(gameMode));
-   }
-
-   private IEnumerator<object> LoadGameScene(Game.GameType gameMode)
-   {
-      AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameScene");
-
-      while (asyncLoad != null && !asyncLoad.isDone)
-      {
-         yield return null;
-      }
-
+      
+      await sceneChangeGameObject.GetComponent<SceneTransition>().StartSceneChange();
       switch (gameMode)
       {
          case Game.GameType.Soccer:
@@ -80,9 +66,12 @@ public class GameController : MonoBehaviour
       homeButton = GameObject.Find("UI/homeButton");
       homeButton.GetComponent<Button>().onClick.AddListener(OnhomeButtonPressed);
    }
+
+
    
-   public void OnhomeButtonPressed()
+   public async void OnhomeButtonPressed()
    {
-      SceneManager.LoadScene("SetupScene");
+      homeButton.GetComponent<Button>().interactable = false;
+      sceneChangeGameObject.GetComponent<SceneTransition>().StartSceneChange();
    }
 }
