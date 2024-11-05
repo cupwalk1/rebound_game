@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneTransition : MonoBehaviour
 {
@@ -38,6 +39,10 @@ public class SceneTransition : MonoBehaviour
     
     public async Task StartSceneChange()
     {
+        foreach (GameObject i in GameObject.FindGameObjectsWithTag("GameButton"))
+        {
+            i.GetComponent<Button>().interactable = false;
+        }
         ShowAnimation();
         Application.backgroundLoadingPriority = ThreadPriority.Low;
         await Task.Delay(750);

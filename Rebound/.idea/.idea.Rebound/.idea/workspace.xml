@@ -5,25 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65fd8963-4a4e-43fb-b7f5-748200e36784" name="Changes" comment="Finished all games and added a home button.">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Base Classes/DotChain.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Base Classes/DotChain.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rebound/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rebound/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.utmp/RelWithDebInfo/2z1f5r19/armeabi-v7a/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.utmp/RelWithDebInfo/2z1f5r19/armeabi-v7a/configure_fingerprint.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/New Animation.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/New Animation.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Shadow - Game.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Shadow - Game.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SetupScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SetupScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Modes/Hockey.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Modes/Hockey.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Circle.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Circle.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/GearPressed.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/GearPressed.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/GearUnpress.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/GearUnpress.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/cog.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/cog.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/cog.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/cog.svg.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SceneTransition.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SceneTransition.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/White Sprites/Circle.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/White Sprites/Circle.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/White Sprites/PlayerIndicatorTopBottom.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/White Sprites/PlayerIndicatorTopBottom.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/White Sprites/WinnerBG.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/White Sprites/WinnerBG.png.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Rebound_BurstDebugInformation_DoNotShip/tempburstlibs/armeabi-v7a/lib_burst_generated.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Rebound_BurstDebugInformation_DoNotShip/tempburstlibs/armeabi-v7a/lib_burst_generated.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +143,7 @@
       <workItem from="1729957123356" duration="18050000" />
       <workItem from="1730214764408" duration="2119000" />
       <workItem from="1730217557112" duration="2097000" />
-      <workItem from="1730220100081" duration="50363000" />
+      <workItem from="1730220100081" duration="53949000" />
     </task>
     <task id="LOCAL-00001" summary="Split scripts, added more virtual methods that individual games can handle, and added fencing (still have to change name from Pool)">
       <option name="closed" value="true" />
