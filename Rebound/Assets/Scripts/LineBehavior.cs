@@ -9,7 +9,6 @@ public class LineBehavior : MonoBehaviour
 {
 
     public List<Dot> ValidDots = new();
-    public IPlayer CurrentPlayer;
     private Game _g;
     [FormerlySerializedAs("Button")] [SerializeField]
     private GameObject button;

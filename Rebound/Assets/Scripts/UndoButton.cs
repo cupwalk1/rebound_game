@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,11 +31,18 @@ public class UndoButton : MonoBehaviour
       }
    }
    
-   void Start()
+   private async Task WaitForGameLoad()
    {
+      while (GameController.Instance?.CurrentGame == null) await Task.Delay(10);
+      _g = GameController.Instance.CurrentGame;
+   }
+   
+   async void Start()
+   {
+      gameObject.SetActive(false);
       GetComponent<Button>().onClick.AddListener(CheckUndo);
-      _g = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
-
+      WaitForGameLoad();
+      gameObject.SetActive(true);
    }
 
    private void CheckUndo()

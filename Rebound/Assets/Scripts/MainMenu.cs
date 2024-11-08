@@ -9,11 +9,12 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject SettingsPanel;
     [SerializeField] private GameObject SettingsMenu;
+    [SerializeField] private float x;
     public void Start()
     {
         SettingsPanel.SetActive(false);
-        float x = Camera.main.ScreenToWorldPoint(new Vector3(Screen.height, 0, 0)).x;
-        SettingsMenu.transform.SetPositionAndRotation(new Vector3(0, -20, 0), new Quaternion(0, 0, 0, 0));
+        x = Camera.main.ScreenToWorldPoint(new Vector3(Screen.height, 0, 0)).x;
+        SettingsMenu.transform.SetPositionAndRotation(new Vector3(0, -x-2, 0), new Quaternion(0, 0, 0, 0));
     }
 
     public void OnSoccerClick()
@@ -55,7 +56,7 @@ public class MainMenu : MonoBehaviour
     
     public void OnSettingsClose()
     {
-        SettingsMenu.transform.LeanMoveY(-20, 1f).setEaseInQuad().setOnComplete(() => SettingsPanel.SetActive(false));
+        SettingsMenu.transform.LeanMoveY(-x-2, 1f).setEaseInQuad().setOnComplete(() => SettingsPanel.SetActive(false));
     }
 
 }

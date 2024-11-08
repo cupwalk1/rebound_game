@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 
 public static class Player
 {
+
    public static IPlayer Player1;
    public static IPlayer Player2;
    public static IPlayer None;
@@ -20,6 +21,13 @@ public static class Player
    public static readonly Color Player2Color = Color.blue; 
    
    static Player()
+   {
+      Player1 = new P1();
+      Player2 = new P2();
+      None = new None();
+      CurrentPlayer = Player1;
+   }
+   public static void ResetPlayers()
    {
       Player1 = new P1();
       Player2 = new P2();

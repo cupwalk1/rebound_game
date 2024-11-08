@@ -44,8 +44,8 @@ public abstract class Game
    
    public void SetupBoard()
    {
+      Player.ResetPlayers();
       AddLineBehavior();
-
       _winnerText = GameObject.Find("UI/WinnerText");
       BoardManager.Instance.GenerateBoard();
       foreach (GameObject i in GameObject.FindGameObjectsWithTag("PlayerIndicator"))

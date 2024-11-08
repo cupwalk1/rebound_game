@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour
 
    private void Awake()
    {
-      Screen.orientation = ScreenOrientation.Portrait;
+
       if (Instance != null)
       {
          Destroy(this);
@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour
 
    public async void StartGame(Game.GameType gameMode)
    {
-      
+      CurrentGame = null;
       await sceneChangeGameObject.GetComponent<SceneTransition>().StartSceneChange();
       switch (gameMode)
       {

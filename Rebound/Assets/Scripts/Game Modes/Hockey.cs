@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 
 public sealed class Hockey : TwoLineGame
@@ -22,7 +22,7 @@ public sealed class Hockey : TwoLineGame
 
    public Hockey()
    {
-      BoardHeight = 13;
+      BoardHeight = 15;
       BoardWidth = 7;
       Background = Resources.Load<GameObject>("Prefabs/SoccerBackground");
    }
@@ -197,6 +197,7 @@ public class Puck
       PuckPrefab = Resources.Load<GameObject>("Prefabs/HockeyPuck");
       Instance = Object.Instantiate(PuckPrefab, new Vector3(0, 0, 0), Quaternion.identity);
       Instance.transform.SetParent(GameObject.Find("UI").transform);
+      Instance.GetComponent<Image>().color = Color.black;
       Instance.transform.localScale = Vector3.one;
       SetPosition(dot);
    }
