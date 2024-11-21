@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using CandyCoded.HapticFeedback;
 
 
 public abstract class Game
@@ -39,14 +40,14 @@ public abstract class Game
       Sumo,
       Hockey,
       Fencing,
-      SoccerBlitz
+      SoccerBlitz,
+      Tutorial
    }
    
    public void SetupBoard()
    {
       Player.ResetPlayers();
       AddLineBehavior();
-      _winnerText = GameObject.Find("UI/WinnerText");
       BoardManager.Instance.GenerateBoard();
       foreach (GameObject i in GameObject.FindGameObjectsWithTag("PlayerIndicator"))
       {
@@ -80,18 +81,13 @@ public abstract class Game
 
    protected void OnVictory(IPlayer winner)
    {
-      GameObject[] particles = GameObject.FindGameObjectsWithTag("WinnerCoriandoli");
       InProgress = false;
-      _winnerText.SetActive(true);
-      GameObject.FindGameObjectWithTag("Button").GetComponent<Button>().interactable = false;
-      GameObject.Find("UI/backgroundWin").GetComponent<Image>().enabled = true;
-      _winnerText.GetComponent<TMP_Text>().text = winner.Name + " Wins!";
-      _winnerText.GetComponent<TMP_Text>().color = winner.Color;
-
-      foreach (GameObject particle in particles)
+      if (Vibration.CurrentValue)
       {
-         particle.GetComponent<ParticleSystem>().Play();
+         Handheld.Vibrate();
       }
+      GameObject.FindGameObjectWithTag("Button").GetComponent<Button>().interactable = false;
+      GameObject.Find("UI/VictoryUI").GetComponent<VictoryAnimation>().ShowVictoryUI(winner);
    }
 
 
@@ -114,6 +110,10 @@ public abstract class Game
    
    public virtual void OnBounce(Dot touchedDot)
    {
+      if (Vibration.CurrentValue)
+      {
+         HapticFeedback.MediumFeedback();
+      }
       CurrentLine.SetEndDot(touchedDot);
       if (CurrentDot.LoseDots.Contains(touchedDot))
       {
@@ -140,6 +140,13 @@ public abstract class Game
 
    public virtual void OnEndLine(Dot touchedDot)
    {
+      if (CurrentLine.GetEndDot() != touchedDot)
+      {
+         if (Vibration.CurrentValue)
+         {
+            HapticFeedback.MediumFeedback();
+         }
+      }
       CurrentLine.SetEndDot(touchedDot, true);
    }
 

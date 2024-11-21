@@ -1,3 +1,5 @@
 # ninja log v5
-0	161	1730700301310973632	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	884947d8293aee7b
 161	244	1730700301387345166	/Users/walkupclay/Documents/GitHub/rebound_game/Rebound/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/build/intermediates/cxx/Debug/1t1t6x3u/obj/armeabi-v7a/libswappywrapper.so	aabcfff3f9f4c306
+0	161	1730700301310973632	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	884947d8293aee7b
+0	8354	1732120107911488907	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	884947d8293aee7b
+8354	12239	1732120111790684063	/Users/walkupclay/Documents/GitHub/rebound_game/Rebound/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/build/intermediates/cxx/Debug/1t1t6x3u/obj/armeabi-v7a/libswappywrapper.so	aabcfff3f9f4c306

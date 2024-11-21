@@ -60,6 +60,9 @@ public class GameController : MonoBehaviour
          case Game.GameType.SoccerBlitz:
             CurrentGame = new SoccerBlitz();
             break;
+         case Game.GameType.Tutorial:
+            CurrentGame = new Tutorial();
+            break;
       }
 
       CurrentGame.SetupBoard();
@@ -69,7 +72,7 @@ public class GameController : MonoBehaviour
 
 
    
-   public async void OnhomeButtonPressed()
+   public  void OnhomeButtonPressed()
    {
       homeButton.GetComponent<Button>().interactable = false;
       sceneChangeGameObject.GetComponent<SceneTransition>().StartSceneChange();

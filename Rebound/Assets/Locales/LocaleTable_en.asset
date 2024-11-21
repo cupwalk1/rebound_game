@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: LocaleTable_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: e560c0d1b1a404decb8ce9905b46bfc7, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 19833806848
+    m_Localized: 'Language:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146052997120
+    m_Localized: 'Volume:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 183113867264
+    m_Localized: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 311480541184
+    m_Localized: Donate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 346633003008
+    m_Localized: P1 Wins!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 526572838912
+    m_Localized: P2 Wins!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 527894044672
+    m_Localized: Tie!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 612895809536
+    m_Localized: Coming Soon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4432275169280
+    m_Localized: 'Settings:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4936187240448
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5028013137920
+    m_Localized: Home
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3676107407613952
+    m_Localized: 'Haptic Feedback:'
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

@@ -6,9 +6,7 @@ using UnityEngine.UI;
 
 public class SceneTransition : MonoBehaviour
 {
-    AsyncOperation asyncLoad;
-
-    static SceneTransition Instance;
+    public static SceneTransition Instance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     
     private void Awake()
@@ -46,7 +44,7 @@ public class SceneTransition : MonoBehaviour
         ShowAnimation();
         Application.backgroundLoadingPriority = ThreadPriority.Low;
         await Task.Delay(750);
-        asyncLoad = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0) ? 1 : 0);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0) ? 1 : 0);
         asyncLoad.priority = 0;
         await asyncLoad;
     }

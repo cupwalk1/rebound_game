@@ -16,6 +16,13 @@ public class MainMenu : MonoBehaviour
         x = Camera.main.ScreenToWorldPoint(new Vector3(Screen.height, 0, 0)).x;
         SettingsMenu.transform.SetPositionAndRotation(new Vector3(0, -x-2, 0), new Quaternion(0, 0, 0, 0));
     }
+    
+    public void OnTutorialClick()
+    {
+        GameController gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        gameController.StartGame(Game.GameType.Tutorial);
+         
+    }
 
     public void OnSoccerClick()
     {

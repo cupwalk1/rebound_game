@@ -5,28 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65fd8963-4a4e-43fb-b7f5-748200e36784" name="Changes" comment="Finished all games and added a home button.">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerDotIndicator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerDotIndicator.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/AndroidManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/AndroidManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Modes/Tutorial.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Modes/Tutorial.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Vibration.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Vibration.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rebound/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rebound/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.utmp/Debug/1t1t6x3u/armeabi-v7a/.cmake/api/v1/reply/cache-v2-0e22510cae36153ba97b.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.utmp/Debug/1t1t6x3u/armeabi-v7a/.cmake/api/v1/reply/cmakeFiles-v1-c222a734b5d5999c364c.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.utmp/Debug/1t1t6x3u/armeabi-v7a/.cmake/api/v1/reply/index-2024-11-04T06-05-00-0508.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.utmp/Debug/1t1t6x3u/armeabi-v7a/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/.utmp/Debug/1t1t6x3u/armeabi-v7a/.ninja_deps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.utmp/Debug/1t1t6x3u/armeabi-v7a/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/.utmp/Debug/1t1t6x3u/armeabi-v7a/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.utmp/Debug/1t1t6x3u/armeabi-v7a/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/.utmp/Debug/1t1t6x3u/armeabi-v7a/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.utmp/Debug/1t1t6x3u/armeabi-v7a/FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/.utmp/Debug/1t1t6x3u/armeabi-v7a/FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.utmp/Debug/1t1t6x3u/armeabi-v7a/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/.utmp/Debug/1t1t6x3u/armeabi-v7a/build.ninja" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.utmp/Debug/1t1t6x3u/armeabi-v7a/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.utmp/Debug/1t1t6x3u/armeabi-v7a/configure_fingerprint.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/GearPressed.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/GearPressed.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/New Animation.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/New Animation.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/HockeyPuck.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/HockeyPuck.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SetupScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SetupScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Base Classes/Game.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Base Classes/Game.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Base Classes/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Base Classes/Player.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Modes/Hockey.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Modes/Hockey.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/LineBehavior.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LineBehavior.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UndoButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UndoButton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/White Sprites/PlayerCircle.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/White Sprites/PlayerCircle.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SceneTransition.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SceneTransition.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +72,8 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game Modes/Hockey.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/LineBehavior.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UndoButton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Vibration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline/Editor/State/SequenceState.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5a41d6b7189842eca409fd0b1c3e3dcf17bf78/41/54895cbc/Void.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/641b887a5ebf4b58a86d26bd32bff0cd1f4200/02/8af8b44c/LayoutDataStore.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a6d715f5ce8c4754a140b50ff638878a469400/0c/f1f54d60/AsyncTaskMethodBuilder`1.cs" root0="FORCE_HIGHLIGHTING" />
@@ -158,7 +165,7 @@
       <workItem from="1729957123356" duration="18050000" />
       <workItem from="1730214764408" duration="2119000" />
       <workItem from="1730217557112" duration="2097000" />
-      <workItem from="1730220100081" duration="77402000" />
+      <workItem from="1730220100081" duration="113604000" />
     </task>
     <task id="LOCAL-00001" summary="Split scripts, added more virtual methods that individual games can handle, and added fencing (still have to change name from Pool)">
       <option name="closed" value="true" />
