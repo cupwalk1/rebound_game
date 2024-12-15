@@ -7,21 +7,35 @@ using UnityEngine.Serialization;
 
 public class LineBehavior : MonoBehaviour
 {
-
+    public Touch touch;
     public List<Dot> ValidDots = new();
     private Game _g;
-    [FormerlySerializedAs("Button")] [SerializeField]
-    private GameObject button;
     private Vector3 _currentPos;
+    private bool active = false;
 
     void Start()
     {
-        _g = GameObject.Find("GameController").GetComponent<GameController>().CurrentGame;
+        
+        gameObject.SetActive(false);
+        if (GameController.Instance != null)
+        {
+            GameController.Instance.OnBoardGenerated.AddListener(() =>
+            {
+                gameObject.SetActive(true);
+            });
+        }
+        else
+        {
+            Debug.Log("GameController is null");
+            _ = new Soccer();
+        }
+        
     }
 
     void Update()
     {
 
+        _g = Game.Instance;
         if (!_g.InProgress)
         {
             return;
@@ -32,7 +46,7 @@ public class LineBehavior : MonoBehaviour
             return;
         }
 
-        Touch touch = Input.GetTouch(0);
+        touch = Input.GetTouch(0);
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(touch.position), Vector2.zero);
 
         switch (touch.phase)

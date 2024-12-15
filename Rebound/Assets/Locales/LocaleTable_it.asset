@@ -63,7 +63,80 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3676107407613952
-    m_Localized: 'Interfaccia Aptica:'
+    m_Localized: 'Vibrazioni:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7678563233816576
+    m_Localized: Arriva nella porta del tuo colore!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7681079593918464
+    m_Localized: C'e' una linea per ogni giocatore. Prendi il disco e portalo alla
+      tua porta. Se non hai il disco, hai un rimbalzo in piu' al tuo turno.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7689464573845504
+    m_Localized: C'e' una linea per ogni giocatore. Cerca di colpire l'ultimo punto
+      della linea del tuo avversario prima che lui colpisca il fine della tua linea.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7689751623622656
+    m_Localized: Cerca di intrappolare il tuo avversario in modo che non riesce ad
+      arrivare in un punto libero. Se non ci sono piu' punti liberi, il gioco finisce
+      in pareggio. C'e' una linea per ogni giocatore.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7702175466643456
+    m_Localized: Ciao! Benvenuto a rebound!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7702526437613568
+    m_Localized: Tocca al giocatore rosso, disegna una linea dal centro al punto
+      indicato.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7703233265917952
+    m_Localized: Bene, ora tocca al giocatore blu. Trascina una linea al prossimo
+      punto.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7704119740456960
+    m_Localized: 'Giocatore rosso: collega la linea al punto al centro.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7704678883123200
+    m_Localized: 'Quando tocchi un punto che e'' gia'' collegato a uno o piu'' punti,
+      devi rimbalzare.
+
+      Rimbalza al prossimo punto.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7705259014086656
+    m_Localized: 'Giocatore 2, rimbalza per arrivare al punto indicato. Nota: si
+      puo'' anche rimbalzare sulle mura'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7706343363305472
+    m_Localized: Ottimo! quelle sono le regole generali, ora cerca di arrivare al
+      tuo goal! buona fortuna!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7707080856166400
+    m_Localized: Bravo! Ogni modalita' di gioco e' leggermente diverso, premi l'i
+      in alto destra ai diversi giochi per scoprire informazioni in piu' su quella
+      modalita'.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9481207766048768
+    m_Localized: 'Programmatore:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9482544364904448
+    m_Localized: 'Progettatori:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9481410153799680
+    m_Localized: 'Disegnatore:'
     m_Metadata:
       m_Items: []
   references:

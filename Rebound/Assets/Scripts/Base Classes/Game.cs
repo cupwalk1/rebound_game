@@ -5,8 +5,9 @@ using UnityEngine.UI;
 using CandyCoded.HapticFeedback;
 
 
-public abstract class Game
+public abstract class Game : MonoBehaviour
 {
+   public static Game Instance;
    public Dot StartOfTurnDot;
    public List<Dot> AvailableDots;
    private Dot _currentDot;
@@ -44,10 +45,16 @@ public abstract class Game
       Tutorial
    }
    
+
+   public Game()
+   {
+      Instance = this;
+   }
+   
    public void SetupBoard()
    {
+      Debug.Log("Setting up board");
       Player.ResetPlayers();
-      AddLineBehavior();
       BoardManager.Instance.GenerateBoard();
       foreach (GameObject i in GameObject.FindGameObjectsWithTag("PlayerIndicator"))
       {
@@ -70,15 +77,13 @@ public abstract class Game
       Object.Destroy(line.Instance);
       CurrentLine = null;
    }
-
-
+   
    public void SetCurrentDot(Dot dot)
    {
       CurrentDot = dot;
       AvailableDots = CurrentDot.AvailibleDots();
    }
-
-
+   
    protected void OnVictory(IPlayer winner)
    {
       InProgress = false;
@@ -86,20 +91,18 @@ public abstract class Game
       {
          Handheld.Vibrate();
       }
+      SoundManager.Instance.PlaySFX(SoundManager.Instance.win);
       GameObject.FindGameObjectWithTag("Button").GetComponent<Button>().interactable = false;
       GameObject.Find("UI/VictoryUI").GetComponent<VictoryAnimation>().ShowVictoryUI(winner);
    }
-
-
-
+   
    public virtual void OnBeginLine()
    {
       SetCurrentDot(CurrentDot);
       if (CurrentDot.AttachedLines.Count == 1) StartOfTurnDot = CurrentDot;
       CurrentLine = new Line(Player.CurrentPlayer, CurrentDot, isGameLine: true);
    }
-
-
+   
    public virtual void OnDragLine(Touch touch)
    {
       var touchPos = Camera.main!.ScreenToWorldPoint(touch.position);
@@ -114,6 +117,7 @@ public abstract class Game
       {
          HapticFeedback.MediumFeedback();
       }
+      SoundManager.Instance.PlaySFX(SoundManager.Instance.pop);
       CurrentLine.SetEndDot(touchedDot);
       if (CurrentDot.LoseDots.Contains(touchedDot))
       {
@@ -142,6 +146,7 @@ public abstract class Game
    {
       if (CurrentLine.GetEndDot() != touchedDot)
       {
+         SoundManager.Instance.PlaySFX(SoundManager.Instance.pop);
          if (Vibration.CurrentValue)
          {
             HapticFeedback.MediumFeedback();
@@ -172,16 +177,6 @@ public abstract class Game
          i.GetComponent<Image>().color = Player.CurrentPlayer.Color;
       }
    }
-
-   protected void AddLineBehavior()
-   {
-      if (CurrentLinePath == null)
-      {
-         GameObject go = new("LineBehavior");
-         go.AddComponent<LineBehavior>();
-         CurrentLinePath = go.GetComponent<LineBehavior>();
-      }
-   }
-
+   
    public virtual void ExtraUndoBehavior(){}
 }

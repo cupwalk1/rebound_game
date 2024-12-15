@@ -8,12 +8,21 @@ public sealed class Sumo : TwoLineGame
    {
       BoardHeight = 7;
       BoardWidth = 7;
-      Background = Resources.Load<GameObject>("Prefabs/SumoBackground");
 
-      AddLineBehavior();
    }
 
-   public override GameObject Background { get; protected set; }
+   public GameObject _background;
+   public override GameObject Background
+   {
+      get
+      {
+         return _background;
+      }
+      protected set
+      {
+         _background = value;
+      }
+   }
    public override Dot StartOfGameDot { get; protected set; }
    public override int BoardHeight { get; protected set; }
    public override int BoardWidth { get; protected set; }

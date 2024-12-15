@@ -16,7 +16,7 @@ public class Vibration : MonoBehaviour, IPointerClickHandler
 
    private bool _previousValue;
    private Slider _slider;
-
+ 
    [Header("Animation")] [SerializeField, Range(0, 1f)]
    private float animationDuration = 0.5f;
 
@@ -27,7 +27,19 @@ public class Vibration : MonoBehaviour, IPointerClickHandler
    [Header("Events")] [SerializeField] private UnityEvent onToggleOn;
    [SerializeField] private UnityEvent onToggleOff;
 
+   [SerializeField] private Slider volumeSlider;
+   
+   [SerializeField]
+   private float volume
+   {
+      get
+      {
+         PlayerPrefs.SetFloat("volume", volumeSlider.value);
+         return PlayerPrefs.GetFloat("volume");
+      }
+   }
 
+   
 
    protected Action transitionEffect;
 
@@ -35,7 +47,6 @@ public class Vibration : MonoBehaviour, IPointerClickHandler
    {
       if (_slider != null)
          return;
-
       SetupSliderComponent();
    }
 
@@ -46,7 +57,8 @@ public class Vibration : MonoBehaviour, IPointerClickHandler
          Debug.Log("Vibration value: " + PlayerPrefs.GetInt("vibration"));
          CurrentValue = PlayerPrefs.GetInt("vibration") == 1;
       }
-      else{
+      else
+      {
          CurrentValue = true;
       }
       
@@ -56,7 +68,7 @@ public class Vibration : MonoBehaviour, IPointerClickHandler
          Debug.Log("No slider found!", this);
          return;
       }
-
+      
       SetStateAndStartAnimation(CurrentValue);
       _slider.interactable = false;
       var sliderColors = _slider.colors;
@@ -70,6 +82,8 @@ public class Vibration : MonoBehaviour, IPointerClickHandler
 
    protected virtual void Awake()
    {
+      volumeSlider.onValueChanged.AddListener((float value) => PlayerPrefs.SetFloat("volume", value));
+      
       SetupSliderComponent();
    }
 
@@ -77,8 +91,7 @@ public class Vibration : MonoBehaviour, IPointerClickHandler
    {
       Toggle();
    }
-
-
+   
    private void Toggle()
    {
          SetStateAndStartAnimation(!CurrentValue);

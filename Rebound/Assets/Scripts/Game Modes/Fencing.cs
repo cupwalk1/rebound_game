@@ -9,11 +9,20 @@ public sealed class Fencing : TwoLineGame
    {
       BoardHeight = 9;
       BoardWidth = 7;
-      Background = Resources.Load<GameObject>("Prefabs/SumoBackground");
-      AddLineBehavior();
    }
 
-   public override GameObject Background { get; protected set; }
+   public GameObject _background;
+   public override GameObject Background
+   {
+      get
+      {
+         return _background;
+      }
+      protected set
+      {
+         _background = value;
+      }
+   }
    public override Dot StartOfGameDot { get; protected set; }
    public override int BoardHeight { get; protected set; }
    public override int BoardWidth { get; protected set; }
@@ -29,7 +38,7 @@ public sealed class Fencing : TwoLineGame
 
    protected sealed override void ExtraWinConditions()
    {
-      Game g = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
+      Game g = Game.Instance;
       IPlayer otherPlayer = Player.CurrentPlayer == Player.Player1 ? Player.Player2 : Player.Player1;
       if (Line.LineHistory[^1].GetEndDot() == otherPlayer.LastDot)
       {

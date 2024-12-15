@@ -37,7 +37,14 @@ public class PlayerDotIndicator : MonoBehaviour
       Player2
    }
 
-   private async void Awake()
+   private void Start()
+   {
+      _g = Game.Instance;
+      GameController.Instance.OnBoardGenerated.AddListener(GameStart);
+      gameObject.SetActive(false);
+   }
+   
+   private async void GameStart()
    {
       gameObject.SetActive(false);
       
@@ -48,7 +55,7 @@ public class PlayerDotIndicator : MonoBehaviour
       isTwoPlayerGame = await CheckIfTwoPlayerGame();
       
       
-      worldSize = thisPlayer.LastDot.Instance.GetComponent<CircleCollider2D>().radius/4;  
+      worldSize = Dot.Board[3,3].Instance.GetComponent<CircleCollider2D>().radius/4;  
       gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2((Camera.main.WorldToViewportPoint(new Vector3(worldSize, 0, 0)).x-.5f)*Camera.main.aspect*600, (Camera.main.WorldToViewportPoint(new Vector3(worldSize, worldSize, 0)).y-.5f)*600);
       
       
@@ -71,7 +78,7 @@ public class PlayerDotIndicator : MonoBehaviour
    private async Task<bool> CheckIfTwoPlayerGame()
    {
       while (GameController.Instance?.CurrentGame == null) await Task.Delay(10);
-      _g = GameController.Instance.CurrentGame;
+      _g = Game.Instance;
       bool t = _g.GetType().IsSubclassOf(typeof(TwoLineGame));
       return t;
    }
@@ -117,6 +124,7 @@ public class PlayerDotIndicator : MonoBehaviour
 
       if (_g.CurrentLine! == null)
       {
+
          if (!isTwoPlayerGame) transform.position = _g.CurrentDot.Instance.transform.position;
          else transform.position = thisPlayer.LastDot.Instance.transform.position;
       }

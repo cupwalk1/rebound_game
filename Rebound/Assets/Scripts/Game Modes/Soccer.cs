@@ -3,7 +3,18 @@ using UnityEngine;
 
 public class Soccer : Game
 {
-   public override GameObject Background { get; protected set; }
+   public GameObject _background;
+   public override GameObject Background
+   {
+      get
+      {
+         return _background;
+      }
+      protected set
+      {
+         _background = value;
+      }
+   }
    public override Dot StartOfGameDot { get; protected set; }
    public sealed override int BoardHeight { get; protected set; }
    public override int BoardWidth { get; protected set; }
@@ -14,7 +25,7 @@ public class Soccer : Game
 
       BoardHeight = 13;
       BoardWidth = 7;
-      Background = Resources.Load<GameObject>("Prefabs/SoccerBackground");
+
    }
 
    public override void CustomBoardSetup(int boxesX, int boxesY)

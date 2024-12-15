@@ -10,6 +10,7 @@ public class UndoButton : MonoBehaviour
    public LineBehavior linePath;
    private Line _lastLine;
    
+   
    void Update()
    {
       if (Line.LineHistory.Count == 0)
@@ -17,12 +18,14 @@ public class UndoButton : MonoBehaviour
          GetComponent<Button>().interactable = false;
          return;
       }
-      _g = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
+      _g = Game.Instance;
       _lastLine = Line.LineHistory.Last();
       //The cases for which the back button should be disabled.
-      //If game's not in progress or (the StartOfTurnDot has been set to current dot by OnBeginLine() and the last line was of the opponent) or the player is dragging the line.... Phew, that was LOOONNNGGGGG.
-      if (!_g.InProgress || (_g.CurrentDot == _g.StartOfTurnDot && _lastLine.LinePlayer != Player.CurrentPlayer) || (_g.CurrentLine != null &&  _g.CurrentLine?.GetEndDot() == null) )
+      //If game's not in progress or (the StartOfTurnDot has been set to current dot by OnBeginLine() and the last line was of the opponent) or the player is dragging the line, or the tutorial is currently running.... Phew, that was LOOONNNGGGGG.
+      if (!_g.InProgress || (_g.CurrentDot == _g.StartOfTurnDot && _lastLine.LinePlayer != Player.CurrentPlayer) || (_g.CurrentLine != null &&  _g.CurrentLine?.GetEndDot() == null) || (TutorialController.Instance != null && TutorialController.Instance.CurrentTextIndex <= 6) )
       {
+         
+         
          if (GetComponent<Button>().interactable == true)  GetComponent<Button>().interactable = false;
       }
       else
@@ -34,20 +37,19 @@ public class UndoButton : MonoBehaviour
    private async Task WaitForGameLoad()
    {
       while (GameController.Instance?.CurrentGame == null) await Task.Delay(10);
-      _g = GameController.Instance.CurrentGame;
+      _g = Game.Instance;
    }
    
-   async void Start()
+   void Start()
    {
       gameObject.SetActive(false);
       GetComponent<Button>().onClick.AddListener(CheckUndo);
-      WaitForGameLoad();
-      gameObject.SetActive(true);
+      GameController.Instance.OnGameStart.AddListener(() => gameObject.SetActive(true));
    }
 
    private void CheckUndo()
    {
-      _g = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
+      _g = Game.Instance;
       
       
       
@@ -77,6 +79,9 @@ public class UndoButton : MonoBehaviour
 
    private void Undo()
    {
+      
+      SoundManager.Instance.PlaySFX(SoundManager.Instance.backBtn);
+      
       _g.ExtraUndoBehavior();
       _g.SetCurrentDot(Line.LineHistory.Last().GetStartDot());
       _g.DestroyLine(Line.LineHistory.Last());

@@ -23,7 +23,7 @@ public class BoardManager : Singleton<BoardManager>
     public void GenerateBoard()
     {
     
-        Game currentGame = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
+        Game currentGame = GameController.Instance.CurrentGame.GetComponent<Game>();
         
         _ = Instantiate(currentGame.Background, new Vector3(0, 0, 0), Quaternion.identity);
         coulumns = currentGame.BoardWidth;
@@ -102,6 +102,8 @@ public class BoardManager : Singleton<BoardManager>
 
         // Connect the dots in the ordered list
         ConnectBorderDots(OrderedList, Color.white);
+        
+        GameController.Instance.OnBoardGenerated.Invoke();
     }
 
     private void DrawOuterDiagonalDots(List<Dot> orderedList)

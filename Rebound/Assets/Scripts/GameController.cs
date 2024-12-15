@@ -7,13 +7,14 @@ using UnityEngine.UI;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 
 public class GameController : MonoBehaviour
 {
    public static GameController Instance;
-   public Game CurrentGame;
+   public GameObject CurrentGame;
    public BoardManager boardManager;
    public Game.GameType GameMode;
    public GameObject WinnerText;
@@ -24,11 +25,26 @@ public class GameController : MonoBehaviour
    public GameObject SoccerBlitzBackground;
    public GameObject undoButton;
    public GameObject homeButton;
+
+   public GameObject Soccer;
+   public GameObject Sumo;
+   public GameObject Fencing;
+   public GameObject Hockey;
+   public GameObject Tutorial;
+   private Game game {
+      get
+      {
+         return CurrentGame.GetComponent<Game>();
+      }
+      set{}}
+   
    [SerializeField] private GameObject sceneChangeGameObject;
+   
+   public UnityEvent OnGameStart;
+   public UnityEvent OnBoardGenerated;
 
    private void Awake()
    {
-
       if (Instance != null)
       {
          Destroy(this);
@@ -43,31 +59,32 @@ public class GameController : MonoBehaviour
    {
       CurrentGame = null;
       await sceneChangeGameObject.GetComponent<SceneTransition>().StartSceneChange();
+      
       switch (gameMode)
       {
          case Game.GameType.Soccer:
-            CurrentGame = new Soccer();
+            CurrentGame = Instantiate(Soccer);
             break;
          case Game.GameType.Sumo:
-            CurrentGame = new Sumo();
-            break;
-         case Game.GameType.Hockey:
-            CurrentGame = new Hockey();
+            CurrentGame = Instantiate(Sumo);
             break;
          case Game.GameType.Fencing:
-            CurrentGame = new Fencing();
+            CurrentGame = Instantiate(Fencing);
             break;
-         case Game.GameType.SoccerBlitz:
-            CurrentGame = new SoccerBlitz();
-            break;
-         case Game.GameType.Tutorial:
-            CurrentGame = new Tutorial();
+         case Game.GameType.Hockey: 
+            CurrentGame = Instantiate(Hockey);
+            break;   
+         case Game.GameType.Tutorial:  
+            CurrentGame = Instantiate(Tutorial);
             break;
       }
-
-      CurrentGame.SetupBoard();
-      homeButton = GameObject.Find("UI/homeButton");
+      OnGameStart.AddListener(game.SetupBoard);
+      
+      homeButton = GameObject.Find("homeButton");
+      homeButton.GetComponent<Button>().interactable = false;
       homeButton.GetComponent<Button>().onClick.AddListener(OnhomeButtonPressed);
+      OnGameStart.Invoke();
+      homeButton.GetComponent<Button>().interactable = true;
    }
 
 

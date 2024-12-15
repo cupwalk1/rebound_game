@@ -21,7 +21,7 @@ public class Line
 
     public Line(IPlayer player, Dot startDot, Dot endDot = null, bool isGameLine = false)
     {
-        Game g = GameObject.FindGameObjectWithTag("GC").GetComponent<GameController>().CurrentGame;
+        Game g =Game.Instance;
         Instance = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("Prefabs/Line"), startDot.Instance.transform.position, Quaternion.identity);
         RendererInstance = Instance.GetComponent<LineRenderer>();
 
