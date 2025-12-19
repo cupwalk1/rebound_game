@@ -29,7 +29,7 @@ public class Vibration : MonoBehaviour, IPointerClickHandler
 
    [SerializeField] private Slider volumeSlider;
    
-   [SerializeField]
+   [field: SerializeField]
    private float volume
    {
       get

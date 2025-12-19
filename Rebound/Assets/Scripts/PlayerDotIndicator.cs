@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerDotIndicator : MonoBehaviour
 {
    [SerializeField] private float worldSize;
-   [SerializeField]
+   [field: SerializeField]
    private IPlayer thisPlayer
    {
       get

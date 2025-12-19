@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using CandyCoded.HapticFeedback;
+
+//using CandyCoded.HapticFeedback;
 
 
 public abstract class Game : MonoBehaviour
@@ -89,7 +90,7 @@ public abstract class Game : MonoBehaviour
       InProgress = false;
       if (Vibration.CurrentValue)
       {
-         Handheld.Vibrate();
+         //Handheld.Vibrate();
       }
       SoundManager.Instance.PlaySFX(SoundManager.Instance.win);
       GameObject.FindGameObjectWithTag("Button").GetComponent<Button>().interactable = false;
@@ -115,7 +116,7 @@ public abstract class Game : MonoBehaviour
    {
       if (Vibration.CurrentValue)
       {
-         HapticFeedback.MediumFeedback();
+         //HapticFeedback.MediumFeedback();
       }
       SoundManager.Instance.PlaySFX(SoundManager.Instance.pop);
       CurrentLine.SetEndDot(touchedDot);
@@ -149,7 +150,7 @@ public abstract class Game : MonoBehaviour
          SoundManager.Instance.PlaySFX(SoundManager.Instance.pop);
          if (Vibration.CurrentValue)
          {
-            HapticFeedback.MediumFeedback();
+            //HapticFeedback.MediumFeedback();
          }
       }
       CurrentLine.SetEndDot(touchedDot, true);

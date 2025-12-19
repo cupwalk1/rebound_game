@@ -1,22 +1,36 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using System.Linq;
-using UnityEngine.Serialization;
-
+using UnityEngine;
+using UnityEngine.InputSystem;
+using TouchPhase = UnityEngine.TouchPhase;
 
 public class LineBehavior : MonoBehaviour
 {
-    public Touch touch;
-    public List<Dot> ValidDots = new();
+    private InputAction pointerPress;
+    private InputAction pointerPosition;
+
     private Game _g;
-    private Vector3 _currentPos;
-    private bool active = false;
+    private bool isPressed;
+
+    void Awake()
+    {
+        pointerPress = new InputAction(
+            "PointerPress",
+            binding: "<Pointer>/press"
+        );
+
+        pointerPosition = new InputAction(
+            "PointerPosition",
+            binding: "<Pointer>/position"
+        );
+
+        pointerPress.Enable();
+        pointerPosition.Enable();
+    }
 
     void Start()
     {
-        
         gameObject.SetActive(false);
+
         if (GameController.Instance != null)
         {
             GameController.Instance.OnBoardGenerated.AddListener(() =>
@@ -24,77 +38,64 @@ public class LineBehavior : MonoBehaviour
                 gameObject.SetActive(true);
             });
         }
-        else
-        {
-            Debug.Log("GameController is null");
-            _ = new Soccer();
-        }
-        
     }
 
     void Update()
     {
-
         _g = Game.Instance;
-        if (!_g.InProgress)
-        {
-            return;
-        }
-        
-        if (Input.touchCount == 0)
-        {
-            return;
-        }
+        if (!_g.InProgress) return;
 
-        touch = Input.GetTouch(0);
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(touch.position), Vector2.zero);
-
-        switch (touch.phase)
+        if (pointerPress.WasPressedThisFrame())
         {
-            case TouchPhase.Began:
-                OnTouchBegan(hit);
-                break;
-            case TouchPhase.Moved:
-                OnTouchMoved(touch, hit);
-                break;
-            case TouchPhase.Ended:
-                OnTouchEnded();
-                break;
-            case TouchPhase.Canceled:
-                OnTouchEnded();
-                break;
+            isPressed = true;
+            HandlePointerBegan();
         }
-
+        else if (pointerPress.IsPressed() && isPressed)
+        {
+            HandlePointerMoved();
+        }
+        else if (pointerPress.WasReleasedThisFrame())
+        {
+            isPressed = false;
+            HandlePointerEnded();
+        }
     }
 
-
-
-    private void OnTouchBegan(RaycastHit2D hit)
+    private RaycastHit2D PointerRaycast()
     {
-        if (hit.collider == null)
-        {
-            return;
-        }
+        Vector2 screenPos = pointerPosition.ReadValue<Vector2>();
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
+        return Physics2D.Raycast(worldPos, Vector2.zero);
+    }
+
+    private void HandlePointerBegan()
+    {
+        RaycastHit2D hit = PointerRaycast();
+        if (hit.collider == null) return;
+
         if (hit.collider.gameObject == _g.CurrentDot.Instance)
         {
             _g.OnBeginLine();
         }
     }
 
-    private void OnTouchMoved(Touch touch, RaycastHit2D hit)
+    private void HandlePointerMoved()
     {
-        if (_g.CurrentLine == null)
-        {
-            return;
-        }
+        if (_g.CurrentLine == null) return;
+
+        RaycastHit2D hit = PointerRaycast();
+
         Dot touchedDot = null;
         if (hit.collider != null)
         {
-            touchedDot = _g.AvailableDots.FirstOrDefault(d => d.Instance == hit.collider.gameObject);
+            touchedDot = _g.AvailableDots
+                .FirstOrDefault(d => d.Instance == hit.collider.gameObject);
         }
+
         if (touchedDot == null)
         {
-            _g.OnDragLine(touch);
+            _g.OnDragLine(new Touch
+                { position = pointerPosition.ReadValue<Vector2>()});
         }
         else if (touchedDot.AttachedLines.Count > 0)
         {
@@ -104,32 +105,19 @@ public class LineBehavior : MonoBehaviour
         {
             _g.OnEndLine(touchedDot);
         }
-
     }
 
-    private void OnTouchEnded()
+    private void HandlePointerEnded()
     {
-
-        if (_g.CurrentLine == null)
-        {
-            return;
-        }
+        if (_g.CurrentLine == null) return;
 
         if (_g.CurrentLine.GetEndDot() == null)
         {
             _g.OnLineCanceled();
-            //If the line is not connected to a dot
         }
         else if (_g.CurrentLine.GetEndDot().AttachedLines.Count == 0)
         {
-            //If the line is connected to a dot with no other lines
             _g.OnLineReleased();
         }
     }
-
-
-
-
-
-
 }
